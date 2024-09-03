@@ -1,6 +1,5 @@
 import "./styles.css";
 import List from "../../components/List";
-import Videos from "../../components/Video";
 import Forms from "../../components/Forms";
 
 export default function Home() {
