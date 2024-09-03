@@ -1,0 +1,81 @@
+/* HTML BASICO */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+header {
+  background-color: #af6b4c;
+  color: #fff;
+  padding: 16px;
+  text-align: center;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  background-color: #af6b4c;
+  margin-top: 20px;
+}
+
+header a:hover {
+  background-color: #cb7d58;
+}
+
+main {
+  padding: 16px;
+  background-color: #efefef;
+}
+
+section {
+  background-color: #FFF;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin: 16px 0;
+}
+
+.last {
+  margin-bottom: 60px;
+}
+
+h2 {
+  border-bottom: 2px solid #af6b4c;
+  padding-bottom: 8px;
+}
+
+label {
+  display: block;
+  margin-top: 8px;
+}
+
+input {
+  width: 99%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+/*
+textarea {
+  resize: none; Não deixa ele aumentar ou diminuir
+  max-width: 500px;
+  max-height: 200px;
+}
+*/
+
+footer {
+  background-color: #af6b4c;
+  padding: 16px;
+  text-align: center;
+  color: #FFF;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+} 
+
