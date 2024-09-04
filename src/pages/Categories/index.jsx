@@ -1,22 +1,27 @@
+import { useEffect, useState } from 'react'
 import "./styles.css";
-import List from "../../components/List";
-import Forms from "../../components/Forms";
-
+const mock = {
+    "error": false,
+    "category": "Misc",
+    "type": "twopart",
+    "setup": "O que o pagodeiro foi fazer na igreja?",
+    "delivery": "Cantar pá God.",
+    "flags": {
+        "nsfw": false,
+        "religious": true,
+        "political": false,
+        "racist": false,
+        "sexist": false,
+        "explicit": false
+    },
+    "safe": false,
+    "id": 1,
+    "lang": "pt"
+}
 export default function Categories() {
-  // return (
-  //   <main>
-  //     <List titulo="Minha tela exemplo" />
-  //     <Videos />
-  //     <Forms />
-  //   </main>
-  // );
-
-  return (
-    <div>
-        <h1>Pagina Categorias</h1>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia sit iure deserunt, laudantium numquam explicabo culpa quae similique ea ut molestias sequi sed facilis officiis. Doloremque quaerat dolor reiciendis porro.
-        </p>
-    </div>
-)
+    return (
+        <div className='lista-principal'>
+            { conteudo }
+        </div>
+    )
 }

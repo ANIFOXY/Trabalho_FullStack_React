@@ -2,38 +2,37 @@ import { useEffect, useState } from 'react'
 import './styles.css'
 import Card from '../../components/Card'
 
+const mock = {
+    "error": false,
+    "category": "Misc",
+    "type": "twopart",
+    "setup": "O que o pagodeiro foi fazer na igreja?",
+    "delivery": "Cantar pá God.",
+    "flags": {
+        "nsfw": false,
+        "religious": true,
+        "political": false,
+        "racist": false,
+        "sexist": false,
+        "explicit": false
+    },
+    "safe": false,
+    "id": 1,
+    "lang": "pt"
+}
 
-export default function ApiRickAndMorty() {
+export default function ApiJoke() {
     const [conteudo, setConteudo] = useState(<>Carregando</>)
 
     async function carregarTodosOsPersonagens(){
-        const requestOptions = {
-            method: "GET",
-            redirect: "follow"
-        }
-
-        const response = await fetch('https://rickandmortyapi.com/api/character', requestOptions)
-        
-
-        if(!response.ok){
-            throw new Error("Erro na requisicao")
-        }
-
-        const data = await response.json()
-
-        console.log(data)
-
         // carregar todos os personagens da API do rick and morty - com o fetch
-        return { ...data }
+        return mock
     }
 
     async function listarPersonagens(){
-        // const api = carregarTodosOsPersonagens()
-        // // const result = api.result
+        const result = await carregarTodosOsPersonagens()
 
-        const { info, results } = await carregarTodosOsPersonagens()
-
-        return results.map(personagem => <Card key={personagem.id} data={personagem} />)
+        return <>{result.setup}{ result.delivery}</>
     }
 
     useEffect(() => {

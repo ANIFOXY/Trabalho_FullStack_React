@@ -18,6 +18,10 @@ export default function Header() {
                 <Link to="/categories">
                     <li>Categories</li>
                 </Link>
+
+                <Link to="/ApiJoke">
+                    <li>ApiJoke</li>
+                </Link>
             </ul>
         </nav>
         </header>
