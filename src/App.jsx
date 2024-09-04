@@ -4,9 +4,10 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import About from "./pages/About";
 import Home from "./pages/Home";
-import Flags from "./pages/Flags"
-import Idioma from "./pages/Idioma"
-import Chave from "./pages/Chave"
+import ApiJoke from "./pages/ApiJoke"
+import Categories from "./pages/Categories"
+import Favorites from "./pages/Categories"
+
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
       <Routes>
         <Route path='/home' element={<Home />}/>
         <Route path='/about' element={<About />}/>
-        <Route path='/ApiJoke' element={<ApiRickAndMorty />}/>
+        <Route path='/ApiJoke' element={<ApiJoke />}/>
         <Route path='/categories' element={<Categories />}/>
         <Route path='/favorites' element ={<Favorites />}/>
       </Routes>
