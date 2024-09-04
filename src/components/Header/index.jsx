@@ -18,6 +18,18 @@ export default function Header() {
                 <Link to="/categories">
                     <li>Categories</li>
                 </Link>
+
+                <Link to="/flags">
+                    <li>Flags</li>
+                </Link>
+
+                <Link to="/idioma">
+                    <li>idioma</li>
+                </Link>
+
+                <Link to="/chave">
+                    <li>Palavra-Chave</li>
+                </Link>
             </ul>
         </nav>
         </header>
