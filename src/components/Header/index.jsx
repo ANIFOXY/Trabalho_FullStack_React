@@ -7,12 +7,16 @@ export default function Header() {
         <h1>Minha Página HTML - básico</h1>
         <nav>
             <ul>
-                <Link to="/">
+                <Link to="/home">
                     <li>Home</li>
                 </Link>
 
                 <Link to="/about">
                     <li>About</li>
+                </Link>
+
+                <Link to="/categories">
+                    <li>Categories</li>
                 </Link>
             </ul>
         </nav>
