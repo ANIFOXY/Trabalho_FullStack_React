@@ -18,9 +18,7 @@ function App() {
         <Route path='/about' element={<About />}/>
         <Route path='/ApiJoke' element={<ApiRickAndMorty />}/>
         <Route path='/categories' element={<Categories />}/>
-        <Route path='/flags' element={<Flags />}/>
-        <Route path='/idioma' element={<Idioma />}/>
-        <Route path='/chave' element={<Chave />}/>
+        <Route path='/favorites' element ={<Favorites />}/>
       </Routes>
       
       <Footer />

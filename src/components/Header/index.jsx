@@ -12,24 +12,21 @@ export default function Header() {
                 </Link>
 
                 <Link to="/about">
-                    <li>About</li>
+                    <li>Sobre</li>
                 </Link>
 
                 <Link to="/categories">
-                    <li>Categories</li>
+                    <li>Categorias</li>
                 </Link>
 
-                <Link to="/flags">
-                    <li>Flags</li>
+                <Link to="/ApiJoke">
+                    <li>Piadas</li>
                 </Link>
 
-                <Link to="/idioma">
-                    <li>idioma</li>
+                <Link to="/favorites">
+                    <li>Favoritos</li>
                 </Link>
 
-                <Link to="/chave">
-                    <li>Palavra-Chave</li>
-                </Link>
             </ul>
         </nav>
         </header>
