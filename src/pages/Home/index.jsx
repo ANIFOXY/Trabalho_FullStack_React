@@ -1,22 +1,20 @@
 import "./styles.css";
+import { Link } from 'react-router-dom';
 import List from "../../components/List";
 import Forms from "../../components/Forms";
+import FunnyImg from "../../assets/funny-bg.png"
 
 export default function Home() {
-  // return (
-  //   <main>
-  //     <List titulo="Minha tela exemplo" />
-  //     <Videos />
-  //     <Forms />
-  //   </main>
-  // );
 
   return (
-    <div>
-        <h1>Pagina Home</h1>
+    <div className="header-top">
+        <h1>Você gosta de Piadas?</h1>
+        <img src={FunnyImg} alt="logos"></img>
         <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia sit iure deserunt, laudantium numquam explicabo culpa quae similique ea ut molestias sequi sed facilis officiis. Doloremque quaerat dolor reiciendis porro.
+            Aqui você irá ter acesso as melhores piadas, atualizadas em tempo real!
         </p>
+        <Link to="/ApiJoke" className="Api-Joke"><button className="button-piadas">Acessar as Piadas</button></Link>
+        
     </div>
 )
 }
