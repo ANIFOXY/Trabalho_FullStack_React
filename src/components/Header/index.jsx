@@ -14,10 +14,10 @@ export default function Header() {
                         <Link to="/about" className="nav-link">Sobre</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/categories" className="nav-link">Categorias</Link>
+                        <Link to="/ApiJoke" className="nav-link">Piadas(API)</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/ApiJoke" className="nav-link">Piadas</Link>
+                        <Link to="/categories" className="nav-link">Categorias</Link>
                     </li>
                     <li className="nav-item">
                         <Link to="/favorites" className="nav-link">Favoritos</Link>
