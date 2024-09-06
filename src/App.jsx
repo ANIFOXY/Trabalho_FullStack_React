@@ -6,7 +6,8 @@ import About from "./pages/About";
 import Home from "./pages/Home";
 import ApiJoke from "./pages/ApiJoke"
 import Categories from "./pages/Categories"
-import Favorites from "./pages/Categories"
+import Favorites from "./pages/Favorites.jsx"
+import axios from 'axios';
 
 
 function App() {

@@ -1,7 +1,9 @@
 import "./styles.css";
+import FunnyImg from "../../assets/funny-bg.png"
 
 export default function About() {
   return (
+    <div className="fundo-img">
     <div className="about-container">
       <h1>Sobre a API de Piadas</h1>
       <p>
@@ -15,12 +17,17 @@ export default function About() {
       </p>
       <div className="categorias-container">
         <h1>Categorias</h1>
-        <p>Programação, Variadas, Dark, Trocadilho, Assustadora e Natal</p>
+        <p>Programação, Variadas, Dark, Trocadilho, Assustadora e Natal.</p>
         <div className="linaguagens-container">
           <h1>Linguagens</h1>
           <p>Tcheco, Alemão, Inglês, Espanhol, Francês e Português.</p>
         </div>
+        <div className="devs">
+          <h1>Criadores</h1>
+          <p>Vinicius e Wesley @2024</p>
+        </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -1,16 +1,6 @@
 import "./styles.css";
-import List from "../../components/List";
-import Forms from "../../components/Forms";
 
 export default function Categories() {
-  // return (
-  //   <main>
-  //     <List titulo="Minha tela exemplo" />
-  //     <Videos />
-  //     <Forms />
-  //   </main>
-  // );
-
   return (
     <div>
         <h1>Pagina Categorias</h1>

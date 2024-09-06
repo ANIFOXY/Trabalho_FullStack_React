@@ -11,7 +11,7 @@ export default function Header() {
                         <Link to="/home" className="nav-link">Home</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/about" className="nav-link">Sobre</Link>
+                        <Link to="/favorites" className="nav-link">Favoritos</Link>
                     </li>
                     <li className="nav-item">
                         <Link to="/ApiJoke" className="nav-link">Piadas(API)</Link>
@@ -20,7 +20,7 @@ export default function Header() {
                         <Link to="/categories" className="nav-link">Categorias</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/favorites" className="nav-link">Favoritos</Link>
+                        <Link to="/about" className="nav-link">Sobre</Link>
                     </li>
                 </ul>
             </nav>
