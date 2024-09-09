@@ -107,8 +107,8 @@ export default function JokePage() {
             <p>{joke.joke}</p>
           ) : (
             <>
-              <p><strong>Setup:</strong> {joke.setup}</p>
-              <p><strong>Delivery:</strong> {joke.delivery}</p>
+              <p><strong>Questão:</strong> {joke.setup}</p>
+              <p><strong>Resposta:</strong> {joke.delivery}</p>
             </>
           )}
         </div>
