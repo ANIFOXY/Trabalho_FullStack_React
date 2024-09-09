@@ -11,7 +11,7 @@
 
 .piadas-card h2 {
   font-size: 35px;
-  color: #57005f;
+  color: #001b44;
   margin-bottom: 10px;
   font-family: "JetBrains Mono", monospace;
 }
@@ -33,7 +33,7 @@
   margin-left: 30px;
   margin-right: 30px;
   padding: 5rem;
-  background-color: #f1e702;
+  background-color: #0261a0;
   border-radius: 10px;
   justify-content: center;
   display: flex;
