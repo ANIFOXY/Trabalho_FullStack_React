@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './styles.css'; // Certifique-se de que o CSS está ajustado conforme necessário
+import './styles.css';
 
 export default function CategoryJokePage() {
     const [category, setCategory] = useState('Programming');

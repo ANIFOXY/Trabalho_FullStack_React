@@ -1,14 +1,14 @@
-// src/pages/JokePage.jsx
+
 import { useEffect, useState } from 'react';
-import './styles.css';  // Estilos adicionais se necessário
+import './styles.css';
 
 export default function JokePage() {
   const [jokes, setJokes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedType, setSelectedType] = useState('Any');  // Tipo de piada selecionado
-  const [selectedLanguage, setSelectedLanguage] = useState('en');  // Idioma selecionado
-  const [selectedCategory, setSelectedCategory] = useState('');  // Categoria de piada selecionada
+  const [selectedType, setSelectedType] = useState('Any');  
+  const [selectedLanguage, setSelectedLanguage] = useState('en');  
+  const [selectedCategory, setSelectedCategory] = useState('');  
 
   async function fetchJokes(type, language, category) {
     try {
@@ -38,7 +38,7 @@ export default function JokePage() {
 
   useEffect(() => {
     loadJokes(selectedType, selectedLanguage, selectedCategory);
-  }, [selectedType, selectedLanguage, selectedCategory]);  // Recarregar as piadas quando o tipo, idioma ou categoria mudarem
+  }, [selectedType, selectedLanguage, selectedCategory]);
 
   const handleTypeChange = (event) => {
     setSelectedType(event.target.value);
@@ -84,7 +84,6 @@ export default function JokePage() {
         <option value="de">Alemão</option>
         <option value="fr">Francês</option>
         <option value="it">Italiano</option>
-        {/* Adicione mais idiomas conforme necessário */}
       </select>
     </div>
 
