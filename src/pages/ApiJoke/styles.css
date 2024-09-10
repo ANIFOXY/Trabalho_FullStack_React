@@ -19,6 +19,10 @@ body {
   font-size: 1.5rem;
   color: #e74c3c;
   margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .filter {

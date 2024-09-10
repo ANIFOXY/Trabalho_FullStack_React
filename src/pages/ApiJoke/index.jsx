@@ -1,14 +1,13 @@
-
 import { useEffect, useState } from 'react';
 import './styles.css';
 
 export default function JokePage() {
-  const [jokes, setJokes] = useState([]);
+  const [currentJoke, setCurrentJoke] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedType, setSelectedType] = useState('Any');  
-  const [selectedLanguage, setSelectedLanguage] = useState('en');  
-  const [selectedCategory, setSelectedCategory] = useState('');  
+  const [selectedType, setSelectedType] = useState('Any');
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   async function fetchJokes(type, language, category) {
     try {
@@ -24,21 +23,31 @@ export default function JokePage() {
       return data;
     } catch (err) {
       setError(err.message);
+      return null;
     }
   }
 
-  async function loadJokes(type, language, category) {
+  async function loadJoke(type, language, category) {
     setLoading(true);
     const data = await fetchJokes(type, language, category);
     if (data) {
-      setJokes(data.jokes ? [data] : [data]);
+      setCurrentJoke(data.jokes ? data.jokes[0] : data);
+    }
+    setLoading(false);
+  }
+
+  async function getNewJoke() {
+    setLoading(true);
+    const data = await fetchJokes(selectedType, selectedLanguage, selectedCategory);
+    if (data) {
+      setCurrentJoke(data.jokes ? data.jokes[0] : data);
     }
     setLoading(false);
   }
 
   useEffect(() => {
-    loadJokes(selectedType, selectedLanguage, selectedCategory);
-  }, [selectedType, selectedLanguage, selectedCategory]);
+    loadJoke(selectedType, selectedLanguage, selectedCategory);
+  }, []);
 
   const handleTypeChange = (event) => {
     setSelectedType(event.target.value);
@@ -52,7 +61,7 @@ export default function JokePage() {
     setSelectedCategory(event.target.value);
   };
 
-  if (loading) {
+  if (loading && !currentJoke) {
     return <div className="loading">Carregando...</div>;
   }
 
@@ -61,45 +70,65 @@ export default function JokePage() {
   }
 
   return (
-  <div className='joke-page'>
-    <div className="filter">
-      <label htmlFor="joke-type">Escolha o tipo de piada: </label>
-      <select id="joke-type" value={selectedType} onChange={handleTypeChange}>
-        <option value="Any">Qualquer</option>
-        <option value="Programming">Programação</option>
-        <option value="Miscellaneous">Diversos</option>
-        <option value="Dark">Escuro</option>
-        <option value="Spooky">Assustador</option>
-        <option value="Christmas">Natalino</option>
-        <option value="Puns">Trocadilhos</option>
-      </select>
-    </div>
+    <div className='joke-page'>
+      <div className="filter">
+        <label htmlFor="joke-type">Escolha o tipo de piada: </label>
+        <select id="joke-type" value={selectedType} onChange={handleTypeChange}>
+          <option value="Any">Qualquer</option>
+          <option value="Programming">Programação</option>
+          <option value="Miscellaneous">Diversos</option>
+          <option value="Dark">Escuro</option>
+          <option value="Spooky">Assustador</option>
+          <option value="Christmas">Natalino</option>
+          <option value="Pun">Trocadilhos</option>
+        </select>
+      </div>
 
-    <div className="filter">
-      <label htmlFor="joke-language">Escolha o idioma: </label>
-      <select id="joke-language" value={selectedLanguage} onChange={handleLanguageChange}>
-        <option value="en">Inglês</option>
-        <option value="es">Espanhol</option>
-        <option value="pt">Português</option>
-        <option value="de">Alemão</option>
-        <option value="fr">Francês</option>
-        <option value="it">Italiano</option>
-      </select>
-    </div>
+      <div className="filter">
+        <label htmlFor="joke-language">Escolha o idioma: </label>
+        <select id="joke-language" value={selectedLanguage} onChange={handleLanguageChange}>
+          <option value="en">Inglês</option>
+          <option value="es">Espanhol</option>
+          <option value="pt">Português</option>
+          <option value="de">Alemão</option>
+          <option value="fr">Francês</option>
+          <option value="it">Italiano</option>
+        </select>
+      </div>
 
-    <div className="filter">
-      <label htmlFor="joke-category">Escolha a categoria: </label>
-      <select id="joke-category" value={selectedCategory} onChange={handleCategoryChange}>
-        <option value="">Nenhum</option>
-        <option value="nsfw">NSFW</option>
-        <option value="religious">Religioso</option>
-        <option value="political">Político</option>
-        <option value="racist">Racista</option>
-        <option value="sexist">Sexista</option>
-        <option value="explicit">Explícito</option>
-      </select>
-    </div>
+      <div className="filter">
+        <label htmlFor="joke-category">Escolha a categoria: </label>
+        <select id="joke-category" value={selectedCategory} onChange={handleCategoryChange}>
+          <option value="">Nenhum</option>
+          <option value="nsfw">NSFW</option>
+          <option value="religious">Religioso</option>
+          <option value="political">Político</option>
+          <option value="racist">Racista</option>
+          <option value="sexist">Sexista</option>
+          <option value="explicit">Explícito</option>
+        </select>
+      </div>
 
+      <div className='joke-list'>
+        {currentJoke ? (
+          <div className='joke-card'>
+            {currentJoke.type === 'single' ? (
+              <p>{currentJoke.joke}</p>
+            ) : (
+              <>
+                <p><strong>Setup:</strong> {currentJoke.setup}</p>
+                <p><strong>Delivery:</strong> {currentJoke.delivery}</p>
+              </>
+            )}
+          </div>
+        ) : <p>Nenhuma piada encontrada.</p>}
+      </div>
+
+<<<<<<< Fix/React_0.3
+      <button onClick={getNewJoke} className='new-joke-button'>
+        Outra piada
+      </button>
+=======
     <div className='joke-list'>
       {jokes.length > 0 ? jokes.map((joke, index) => (
         <div key={index} className='joke-card'>
@@ -113,7 +142,7 @@ export default function JokePage() {
           )}
         </div>
       )) : <p>Nenhuma piada encontrada.</p>}
+>>>>>>> dev
     </div>
-  </div>
-);
+  );
 }

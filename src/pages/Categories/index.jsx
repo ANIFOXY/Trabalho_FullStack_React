@@ -7,34 +7,52 @@ export default function CategoryJokePage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    async function carregarPiadaPorCategoria(categoria) {
+    async function fetchJokeByCategory(category) {
         setLoading(true);
         try {
-            const response = await fetch(`https://v2.jokeapi.dev/joke/${categoria}`);
-            
+            const response = await fetch(`https://v2.jokeapi.dev/joke/${category}`);
             if (!response.ok) {
                 throw new Error('Erro na requisição');
             }
-            
             const data = await response.json();
-            setJoke(data);
+            return data;
         } catch (err) {
             setError(err.message);
+            return null;
         } finally {
             setLoading(false);
         }
     }
 
+    async function loadJoke() {
+        const data = await fetchJokeByCategory(category);
+        if (data) {
+            setJoke(data);
+        }
+    }
+
+    async function getNewJoke() {
+        const data = await fetchJokeByCategory(category);
+        if (data) {
+            setJoke(data);
+        }
+    }
+
     useEffect(() => {
-        carregarPiadaPorCategoria(category);
-    }, [category]);
+        loadJoke();
+    }, []);
 
     const handleCategoryChange = (event) => {
         setCategory(event.target.value);
     };
 
-    if (loading) return <p>Carregando...</p>;
-    if (error) return <p>Erro: {error}</p>;
+    if (loading && !joke) {
+        return <div className="loading">Carregando...</div>;
+    }
+
+    if (error) {
+        return <div className="error">{error}</div>;
+    }
 
     return (
         <div className='joke-container'>
@@ -42,7 +60,10 @@ export default function CategoryJokePage() {
             <select value={category} onChange={handleCategoryChange}>
                 <option value="Programming">Programação</option>
                 <option value="Miscellaneous">Diversos</option>
-                <option value="Christmas">Natal</option>
+                <option value="Dark">Escuro</option>
+                <option value="Spooky">Assustador</option>
+                <option value="Christmas">Natalino</option>
+                <option value="Pun">Trocadilhos</option>
             </select>
             {joke && (
                 <div>
@@ -56,6 +77,9 @@ export default function CategoryJokePage() {
                     )}
                 </div>
             )}
+            <button onClick={getNewJoke} className='new-joke-button'>
+                Outra Piada
+            </button>
         </div>
     );
 }
