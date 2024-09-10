@@ -124,9 +124,25 @@ export default function JokePage() {
         ) : <p>Nenhuma piada encontrada.</p>}
       </div>
 
+<<<<<<< Fix/React_0.3
       <button onClick={getNewJoke} className='new-joke-button'>
         Outra piada
       </button>
+=======
+    <div className='joke-list'>
+      {jokes.length > 0 ? jokes.map((joke, index) => (
+        <div key={index} className='joke-card'>
+          {joke.type === 'single' ? (
+            <p>{joke.joke}</p>
+          ) : (
+            <>
+              <p><strong>Questão:</strong> {joke.setup}</p>
+              <p><strong>Resposta:</strong> {joke.delivery}</p>
+            </>
+          )}
+        </div>
+      )) : <p>Nenhuma piada encontrada.</p>}
+>>>>>>> dev
     </div>
   );
 }

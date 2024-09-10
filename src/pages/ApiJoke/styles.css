@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "JetBrains Mono", monospace;
   background-color: #f0f4f8;
   margin: 0;
   padding: 0;
@@ -26,9 +28,10 @@ body {
 .filter {
   margin-bottom: 1.5rem;
   padding: 1rem;
-  background: #fff;
+  background: #0261a0;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 80px;
 }
 
 .filter label {
@@ -36,6 +39,7 @@ body {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
   color: #2c3e50;
+  color: white;
 }
 
 .filter select {
