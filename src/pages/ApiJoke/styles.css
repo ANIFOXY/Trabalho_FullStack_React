@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+body {
+  font-family: "JetBrains Mono", monospace;
+  background-color: #f0f4f8;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.joke-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.loading, .error {
+  font-size: 1.5rem;
+  color: #e74c3c;
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.filter {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #0261a0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 80px;
+}
+
+.filter label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+  color: white;
+}
+
+.filter select {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.filter select:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.joke-list {
+  margin-top: 2rem;
+}
+
+.joke-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem auto;
+  max-width: 600px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.joke-card p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.joke-card p strong {
+  color: #3498db;
+}
+
+@media (max-width: 768px) {
+  .joke-page {
+    padding: 1rem;
+  }
+
+  .filter select {
+    width: 100%;
+  }
+}

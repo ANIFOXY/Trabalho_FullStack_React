@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+.piadas-card h1 {
+  font-size: 24px;
+  color: #333333;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+}
+
+.piadas-card h2 {
+  font-size: 35px;
+  color: #001b44;
+  margin-bottom: 10px;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.piadas-card p {
+  font-size: 18px;
+  color: #ffffff;
+  line-height: 1.6;
+  text-align: center;
+  font-family: "JetBrains Mono", monospace;
+  padding: 20px;
+}
+
+.card-h1 {
+  margin-top: 80px;
+}
+
+.piada-fav {
+  margin-left: 30px;
+  margin-right: 30px;
+  padding: 5rem;
+  background-color: #0261a0;
+  border-radius: 10px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 100px;
+  box-shadow: 0 12px 14px rgba(0, 0, 0, 0.1);
+}
+
+.new-joke-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  transition: background-color 0.3s ease;
+}
+
+.new-joke-button:hover {
+  background-color: #0056b3;
+}
+
+
