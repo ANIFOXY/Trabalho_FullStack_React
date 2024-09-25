@@ -40,6 +40,17 @@ class UserApi {
             res.status(400).send('Deu erro')
         }
     }
+
+    async login(req, res) {
+        const {email, password } = req.body
+        try {
+            const token = await UserController.login(email, password)
+            res.send({ token });
+        }catch (e) {
+            console.log(e)
+            res.status(400).send('Deu erro')
+        }
+    }
 }
 
 module.exports = new UserApi()
