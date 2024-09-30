@@ -10,7 +10,7 @@ const Cadastro = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Adicione a lógica de cadastro aqui
+  
         console.log('Nome:', name);
         console.log('Email:', email);
         console.log('Senha:', password);
