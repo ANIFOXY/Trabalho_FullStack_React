@@ -7,7 +7,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Adicione a lógica de autenticação aqui
+
         console.log('Email:', email);
         console.log('Password:', password);
     };

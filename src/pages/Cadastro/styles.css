@@ -38,8 +38,8 @@
 
 
 .cadastro-submit-button {
-    background-color: #4f0099; /* Cor de fundo */
-    color: white; /* Cor do texto */
+    background-color: #4f0099; 
+    color: white; 
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -48,7 +48,7 @@
 }
 
 .cadastro-submit-button:hover {
-    background-color: #6a1b9a; /* Cor ao passar o mouse */
+    background-color: #6a1b9a; 
 }
 
 .cadastro-login-prompt {
