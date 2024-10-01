@@ -1,34 +1,33 @@
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 const user = require('../controller/user')
 
 function authMiddleware(roles = []) {
-    return (req, res, next) => {
-        const token = req.header["authorization"]
-        
-        if (!token) {
-            res.status(500)>json("Usuário não está logado")
-        }
+  return (req, res, next) => {
+    const token = req.headers["authorization"];
 
-        jwt.verify(token, 'MeuSegredo123!', async (err, decoded) => {
-            if(err){
-                return res.status(500).json("Usuário não está logado")
-            }
-
-            const userLogger = await user.findUser(decoded.id)
-
-            if(!userLogger) {
-                return res.status(500).json("Usuario sem permissao")
-            }
-            if(roles.length && !roles.includes(userLogger.role)) {
-                return res.status(500).json("Usuario sem permissao")
-            }
-            
-
-            req.senssion = decoded;
-
-            next()
-        })
+    if (!token) {
+      return res.status(400).json({ mensagem: "Token não fornecido" });
     }
+
+    jwt.verify(token, "exemplo", async (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ mensagem: "Token inválido" });
+      }
+
+      const userLogged = await user.findUser(decoded.id)
+
+      if(!userLogged) {
+        return res.status(404).json({ mensagem: "Usuário não encontrado" });
+      }
+      if(roles.length && !roles.includes(userLogged.permissao)){
+        return res.status(403).json({ mensagem: "Sem permissão" });
+      }
+
+      req.session = decoded;
+
+      next();
+    });
+  }
 }
 
-module.exports = authMiddleware
+module.exports = authMiddleware;

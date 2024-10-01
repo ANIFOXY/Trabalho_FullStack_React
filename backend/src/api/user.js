@@ -1,54 +1,67 @@
 const UserController = require('../controller/user')
 
 class UserApi {
+    async createUser(req, res) {
+        const { nome, email, senha } = req.body
 
-    findUser(req, res) {
         try {
-            const users = UserController.findAll()
-            
-            res.send({ users })
+            const user = await UserController.createUser(nome, email, senha)
+            return res.status(201).send(user)
         } catch (e) {
-            console.log(e)
-            res.status(400).send('Deu erro')
-        }
-        
-    }
-
-    createUser(req, res) {
-        try {
-            res.send('post')
-        } catch (e) {
-            console.log(e)
-            res.status(400).send('Deu erro')
+            return res.status(400).send({ error: `Erro ao criar usuário ${e.message}`})
         }
     }
 
-    updateUser(req, res) {
+    async updateUser(req, res) {
+        const { id } = req.params
+        const { nome, email, senha } = req.body
+
         try {
-            res.send('put')
+            const user = await UserController.update(Number(id), nome, email, senha)
+            return res.status(200).send(user)
         } catch (e) {
-            console.log(e)
-            res.status(400).send('Deu erro')
+            return res.status(400).send({ error: `Erro ao alterar usuário ${e.message}`})
         }
     }
 
-    deleteUser(req, res) {
+    async deleteUser(req, res) {
+        const { id } = req.params
+
         try {
-            res.send('delete')
+            await UserController.delete(Number(id))
+            return res.status(204).send()
         } catch (e) {
-            console.log(e)
-            res.status(400).send('Deu erro')
+            return res.status(400).send({ error: `Erro ao deletar usuário ${e.message}`})
+        }
+    }
+
+    async findUsers(req, res) {
+        try {
+            const users = await UserController.find()
+            return res.status(200).send(users)
+        } catch (e) {
+            return res.status(400).send({ error: `Erro ao listar usuário ${e.message}`})
+        }
+    }
+
+    async findContext(req, res) {
+        try {
+            const user = await UserController.findUser(req?.session?.id || 0)
+            return res.status(200).send(user)
+        } catch (e) {
+            return res.status(400).send({ error: `Erro ao listar usuário ${e.message}`})
         }
     }
 
     async login(req, res) {
-        const {email, password } = req.body
+        const { email, senha } = req.body
+        console.log(req.body)
         try {
-            const token = await UserController.login(email, password)
-            res.send({ token });
-        }catch (e) {
-            console.log(e)
-            res.status(400).send('Deu erro')
+            const token = await UserController.login(email, senha)
+
+            res.status(200).send({ token })
+        } catch (e) {
+            res.status(400).send({ error: e.message })
         }
     }
 }
