@@ -10,21 +10,30 @@ class User {
       },
       nome: {
         type: database.db.Sequelize.STRING,
+        allowNull: false,
       },
       email: {
         type: database.db.Sequelize.STRING,
         unique: true,
+        allowNull: false,
       },
       senha: {
         type: database.db.Sequelize.STRING,
+        allowNull: false,
       },
       permissao: {
         type: database.db.Sequelize.STRING,
-        // sendo ele um enum admin e user
         validate: {
           isIn: [["admin", "user"]],
         },
+        defaultValue: "user",
       },
+      status: {
+        type: database.db.Sequelize.ENUM("active", "blocked"),
+        defaultValue: "active",
+      },
+    }, {
+      timestamps: true,
     });
   }
 }
