@@ -4,8 +4,9 @@ const database = require("./config/database");
 
 const UserApi = require("./api/user");
 const UserRouter = require("./routes/user");
-// const CharacterRouter = require("./routes/character");
 const authMiddleware = require("./middleware/auth");
+const JokeApi = require("./api/joke");
+const JokeRouter = require("./routes/joke");
 
 const app = express();
 app.use(express.json());
@@ -16,11 +17,10 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "OK" });
 });
 
-app.post("/api/v1/login", UserApi.login);
-app.post("/api/v1/user", UserApi.createUser);
+app.post("/api/login", UserApi.login);
+app.post("/api/user", UserApi.createUser);
 
-app.use("/api/v1/user", authMiddleware(), UserRouter);
-// app.use("/api/v1/character", CharacterRouter);
+app.use("/api/user", authMiddleware(), UserRouter);
 
 database.db
   .sync({ force: false })

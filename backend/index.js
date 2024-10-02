@@ -1,12 +1,14 @@
 const express = require('express');
 const useRouter = require('./src/routes/user');
+const useRouter = require('./src/routes/joke');
 const database = require('./src/config/database');
 
 const app = express();
 
 app.use(express.json());
 
-app.use("/api/v1/user", useRouter )
+app.use("/api/user", useRouter)
+app.use("/api/joke", useRouter)
 
 database.db
     .sync({ force: false })
