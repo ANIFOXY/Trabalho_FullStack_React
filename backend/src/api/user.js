@@ -1,69 +1,90 @@
-const UserController = require('../controller/user')
+const UserController = require('../controller/user');
 
 class UserApi {
     async createUser(req, res) {
-        const { nome, email, senha } = req.body
+        const { nome, email, senha, permissao } = req.body;
 
         try {
-            const user = await UserController.createUser(nome, email, senha)
-            return res.status(201).send(user)
+            const user = await UserController.createUser(nome, email, senha, permissao);
+            return res.status(201).send(user);
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao criar usuário ${e.message}`})
+            return res.status(400).send({ error: `Erro ao criar usuário: ${e.message}` });
         }
     }
 
     async updateUser(req, res) {
-        const { id } = req.params
-        const { nome, email, senha } = req.body
+        const { id } = req.params;
+        const { nome, email, senha } = req.body;
 
         try {
-            const user = await UserController.update(Number(id), nome, email, senha)
-            return res.status(200).send(user)
+            const user = await UserController.update(Number(id), nome, email, senha);
+            return res.status(200).send(user);
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao alterar usuário ${e.message}`})
+            return res.status(400).send({ error: `Erro ao alterar usuário: ${e.message}` });
         }
     }
 
     async deleteUser(req, res) {
-        const { id } = req.params
+        const { id } = req.params;
 
         try {
-            await UserController.delete(Number(id))
-            return res.status(204).send()
+            await UserController.delete(Number(id));
+            return res.status(204).send();
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao deletar usuário ${e.message}`})
+            return res.status(400).send({ error: `Erro ao deletar usuário: ${e.message}` });
         }
     }
 
-    async findUsers(req, res) {
+    async findUser(req, res) {
         try {
-            const users = await UserController.find()
-            return res.status(200).send(users)
+            const users = await UserController.find();
+            return res.status(200).send(users);
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao listar usuário ${e.message}`})
+            return res.status(400).send({ error: `Erro ao listar usuários: ${e.message}` });
         }
     }
 
     async findContext(req, res) {
         try {
-            const user = await UserController.findUser(req?.session?.id || 0)
-            return res.status(200).send(user)
+            const user = await UserController.findUser(req.session.id);
+            return res.status(200).send(user);
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao listar usuário ${e.message}`})
+            return res.status(400).send({ error: `Erro ao encontrar usuário: ${e.message}` });
         }
     }
 
     async login(req, res) {
-        const { email, senha } = req.body
-        console.log(req.body)
-        try {
-            const token = await UserController.login(email, senha)
+        const { email, senha } = req.body;
 
-            res.status(200).send({ token })
+        try {
+            const token = await UserController.login(email, senha);
+            return res.status(200).send({ token });
         } catch (e) {
-            res.status(400).send({ error: e.message })
+            return res.status(400).send({ error: e.message });
+        }
+    }
+
+    async blockUser(req, res) {
+        const { id } = req.params;
+
+        try {
+            const user = await UserController.blockUser(Number(id));
+            return res.status(200).send(user);
+        } catch (e) {
+            return res.status(400).send({ error: `Erro ao bloquear usuário: ${e.message}` });
+        }
+    }
+
+    async unblockUser(req, res) {
+        const { id } = req.params;
+
+        try {
+            const user = await UserController.unblockUser(Number(id));
+            return res.status(200).send(user);
+        } catch (e) {
+            return res.status(400).send({ error: `Erro ao desbloquear usuário: ${e.message}` });
         }
     }
 }
 
-module.exports = new UserApi()
+module.exports = new UserApi();
