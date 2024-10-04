@@ -4,9 +4,8 @@ const database = require("./config/database");
 
 const UserApi = require("./api/user");
 const UserRouter = require("./routes/user");
-const authMiddleware = require("./middleware/auth");
-const JokeApi = require("./api/joke");
 const JokeRouter = require("./routes/joke");
+const authMiddleware = require("./middleware/auth");
 
 const app = express();
 app.use(express.json());
@@ -21,6 +20,8 @@ app.post("/api/login", UserApi.login);
 app.post("/api/user", UserApi.createUser);
 
 app.use("/api/user", authMiddleware(), UserRouter);
+app.use("/api/joke", JokeRouter);
+
 
 database.db
   .sync({ force: false })
