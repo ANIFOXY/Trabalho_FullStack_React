@@ -1,7 +1,7 @@
 const express = require("express");
 
 const JokeApi = require("../api/joke");
-const authMiddleware = require("../middleware/authMiddleware");
+const authMiddleware = require("../middleware/auth");
 const router = express.Router();
 
 router.get("/", authMiddleware(), JokeApi.findAllJokes);
