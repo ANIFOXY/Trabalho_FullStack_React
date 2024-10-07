@@ -2,10 +2,10 @@ const JokesController = require('../controller/joke')
 
 class JokesApi {
     async createJoke(req, res) {
-        const { name, species, image, gender, status } = req.body
+        const { category, type, joke, nsfw, religious, political, racist, sexist, explicit, safe, lang } = req.body
 
         try {
-            const jokes = await JokesController.create(name, species, image, gender, status)
+            const jokes = await JokesController.create(category, type, joke, nsfw, religious, political, racist, sexist, explicit, safe, lang)
             return res.status(201).send(jokes)
         } catch (e) {
             return res.status(400).send({ error: `Erro ao criar personagem: ${e.message}`})
@@ -14,10 +14,10 @@ class JokesApi {
 
     async updateJoke(req, res) {
         const { id } = req.params
-        const { name, species, image, gender, status } = req.body
+        const { category, type, joke, nsfw, religious, political, racist, sexist, explicit, safe, lang } = req.body
 
         try {
-            const jokes = await JokesController.update(Number(id), name, species, image, gender, status)
+            const jokes = await JokesController.update(Number(id), category, type, joke, nsfw, religious, political, racist, sexist, explicit, safe, lang)
             return res.status(200).send(jokes)
         } catch (e) {
             return res.status(400).send({ error: `Erro ao alterar personagem: ${e.message}`})

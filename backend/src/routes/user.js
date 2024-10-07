@@ -9,5 +9,7 @@ useRouter.get('/', authMiddleware(['admin', 'viewer']), UserApi.findUser);
 useRouter.post('/', authMiddleware(['admin']), UserApi.createUser);
 useRouter.put('/:id', authMiddleware(), UserApi.updateUser);
 useRouter.delete('/:id', UserApi.deleteUser);
+useRouter.post('/blockUser/:id', authMiddleware(['admin']), UserApi.blockUser)
+useRouter.post('/unblockUser/:id', authMiddleware(['admin']), UserApi.unblockUser)
 
 module.exports = useRouter;

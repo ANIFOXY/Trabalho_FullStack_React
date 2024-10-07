@@ -1,17 +1,23 @@
 const jokes = require("../model/joke");
 
 class JokesController {
-  async create(name, species, image, gender, status) {
-    if (!name || !species || !image || !gender || !status) {
+  async create(category, type, joke, nsfw, religious, political, racist, sexist, explicit, safe, lang) {
+    if (!category || !type || !joke || !nsfw || !religious || !political || !racist || !sexist || !explicit || !safe || !lang) {
       throw new Error("Dados obrigatórios não preenchidos.");
     }
 
     const jokesValue = await jokes.create({
-      name,
-      species,
-      image,
-      gender,
-      status
+      category, 
+      type, 
+      joke, 
+      nsfw, 
+      religious, 
+      political, 
+      racist, 
+      sexist, 
+      explicit, 
+      safe, 
+      lang
     });
 
     return jokesValue;
@@ -41,44 +47,46 @@ class JokesController {
         let page = 1;
         let hasMore = true;
         const requestOptions = {
-          method: 'GET',
-          redirect: 'follow'
+            method: 'GET',
+            redirect: 'follow'
         };
-
+    
         while(hasMore){
-          try {
-            const response = await fetch(
-              `https://rickandmortyapi.com/api/character?page=${page}`,
-              requestOptions
-            )
-        
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
+            try {
+                const response = await fetch(
+                    `https://v2.jokeapi.dev/joke/Any?page=${page}`, // URL da nova API
+                    requestOptions
+                );
+    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+    
+                const data = await response.json();
+    
+                hasMore = data.hasOwnProperty('nextPage') && data.nextPage !== null;
+    
+                data.jokes.forEach(it => {
+                    jokes.create({
+                        category: it.category, 
+                        type: it.type,
+                        joke: it.joke,
+                        nsfw: it.nsfw || false,
+                        religious: it.religious || false,
+                        political: it.political || false,
+                        racist: it.racist || false,
+                        sexist: it.sexist || false,
+                        explicit: it.explicit || false,
+                        safe: it.safe || true,
+                        lang: it.lang || 'en'
+                    });
+                });
+                page++;
+            } catch (error) {
+                hasMore = false;
             }
-        
-            const data = await response.json();
-
-            if(!data?.info?.next){
-              hasMore = false
-            }
-            console.log(data)
-
-            data.results.map(it => {
-              jokes.create({
-                id: it.id,
-                name: it.name,
-                species: it.species,
-                image: it.image,
-                gender: it.gender,
-                status: it.status
-              })
-            })
-            page++
-          } catch (error) {
-            hasMore = false
-          }
         }
-      }
+    }
 
       const pages = Math.ceil(count / limit)
 
