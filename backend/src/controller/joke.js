@@ -1,161 +1,137 @@
 const jokes = require("../model/joke");
-
+ 
 class JokesController {
   async create(category, type, joke, nsfw, religious, political, racist, sexist, explicit, safe, lang) {
-    if (
-      category === undefined || 
-      type === undefined || 
-      joke === undefined || 
-      nsfw === undefined || 
-      religious === undefined || 
-      political === undefined || 
-      racist === undefined || 
-      sexist === undefined || 
-      explicit === undefined || 
-      safe === undefined || 
-      lang === undefined
-    ) {
+    if (!category || !type || !joke || nsfw === undefined || religious === undefined ||
+        political === undefined || racist === undefined || sexist === undefined ||
+        explicit === undefined || safe === undefined || !lang) {
       throw new Error("Dados obrigatórios não preenchidos.");
     }
-
+ 
     const jokesValue = await jokes.create({
-      category, 
-      type, 
-      joke, 
-      nsfw, 
-      religious, 
-      political, 
-      racist, 
-      sexist, 
-      explicit, 
-      safe, 
+      category,
+      type,
+      joke,
+      nsfw,
+      religious,
+      political,
+      racist,
+      sexist,
+      explicit,
+      safe,
       lang
     });
-
+ 
     return jokesValue;
   }
-
+ 
   async findOne(id) {
     if (id === undefined) {
       throw new Error("Id é obrigatório.");
     }
-
+ 
     const jokesValue = await jokes.findByPk(id);
-
+ 
     if (!jokesValue) {
-      throw new Error("Personagem não encontrado.");
+      throw new Error("Piada não encontrada.");
     }
-
+ 
     return jokesValue;
   }
-  
+ 
   async findAll(page = 1) {
     try {
       const limit = 20;
       const offset = (page - 1) * limit;
       const { count, rows: jokesValue } = await jokes.findAndCountAll({ limit, offset });
-
-      if(page === 1 && jokesValue.length <= 0) {
-        let page = 1;
+ 
+      if (page === 1 && jokesValue.length === 0) {
         let hasMore = true;
-        const requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-        };
-    
-        while(hasMore){
-            try {
-                const response = await fetch(
-                    `https://v2.jokeapi.dev/joke/Any?page=${page}`, // URL da nova API
-                    requestOptions
-                );
-    
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-    
-                const data = await response.json();
-    
-                hasMore = data.hasOwnProperty('nextPage') && data.nextPage !== null;
-    
-                data.jokes.forEach(it => {
-                    jokes.create({
-                        category: it.category, 
-                        type: it.type,
-                        joke: it.joke,
-                        nsfw: it.nsfw || false,
-                        religious: it.religious || false,
-                        political: it.political || false,
-                        racist: it.racist || false,
-                        sexist: it.sexist || false,
-                        explicit: it.explicit || false,
-                        safe: it.safe || true,
-                        lang: it.lang || 'en'
-                    });
-                });
-                page++;
-            } catch (error) {
-                hasMore = false;
+        let pageNum = 1;
+ 
+        while (hasMore) {
+          try {
+            const response = await fetch(`https://v2.jokeapi.dev/joke/Any?page=${pageNum}`);
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
             }
+ 
+            const data = await response.json();
+            hasMore = data.hasOwnProperty('nextPage') && data.nextPage !== null;
+ 
+            data.jokes.forEach(it => {
+              jokes.create({
+                category: it.category,
+                type: it.type,
+                joke: it.joke,
+                nsfw: it.nsfw || false,
+                religious: it.religious || false,
+                political: it.political || false,
+                racist: it.racist || false,
+                sexist: it.sexist || false,
+                explicit: it.explicit || false,
+                safe: it.safe || true,
+                lang: it.lang || 'en'
+              });
+            });
+            pageNum++;
+          } catch (error) {
+            hasMore = false;
+          }
         }
-    }
-
-      const pages = Math.ceil(count / limit)
-
-      const result =  page <= pages 
-        ? {
-          info: {
-            count: count,
-            pages: pages,
-            next: pages == page ? null : `http://localhost:3000/api/v1/character/?page=${page+1}`,
-            prev: page == 1 ? null : `http://localhost:3000/api/v1/character/?page=${page}`
-          },
-          results: jokesValue
-        } 
-      : {
+      }
+ 
+      const pages = Math.ceil(count / limit);
+ 
+      return {
         info: {
           count: count,
           pages: pages,
-          next: `http://localhost:3000/api/v1/character/?page=${1}`,
-          prev: `http://localhost:3000/api/v1/character/?page=${1}`
+          next: page < pages ? `http://localhost:3000/api/v1/jokes?page=${page + 1}` : null,
+          prev: page > 1 ? `http://localhost:3000/api/v1/jokes?page=${page - 1}` : null
         },
-        results: []
-      }
-
-      return result;
+        results: jokesValue
+      };
     } catch (error) {
-      console.log(error)
-      throw new Error('Página não encontrada, tente novamente')
+      console.log(error);
+      throw new Error('Erro ao listar as piadas, tente novamente.');
     }
   }
-
-  async update(id, name, species, image, gender, status) {
+ 
+  async update(id, category, type, joke, nsfw, religious, political, racist, sexist, explicit, safe, lang) {
     const oldJokes = await jokes.findByPk(id);
-
-    if(!oldJokes){
-      throw new Error('Personagem não encontrado!')
+ 
+    if (!oldJokes) {
+      throw new Error('Piada não encontrada!');
     }
-    console.log(image)
-
-    oldJokes.name = name || oldJokes.name;
-    oldJokes.species = species || oldJokes.species;
-    oldJokes.image = image || oldJokes.image;
-    oldJokes.gender = gender || oldJokes.gender;
-    oldJokes.status = status || oldJokes.status;
-    oldJokes.save();
-
+ 
+    oldJokes.category = category || oldJokes.category;
+    oldJokes.type = type || oldJokes.type;
+    oldJokes.joke = joke || oldJokes.joke;
+    oldJokes.nsfw = nsfw !== undefined ? nsfw : oldJokes.nsfw;
+    oldJokes.religious = religious !== undefined ? religious : oldJokes.religious;
+    oldJokes.political = political !== undefined ? political : oldJokes.political;
+    oldJokes.racist = racist !== undefined ? racist : oldJokes.racist;
+    oldJokes.sexist = sexist !== undefined ? sexist : oldJokes.sexist;
+    oldJokes.explicit = explicit !== undefined ? explicit : oldJokes.explicit;
+    oldJokes.safe = safe !== undefined ? safe : oldJokes.safe;
+    oldJokes.lang = lang || oldJokes.lang;
+ 
+    await oldJokes.save();
+ 
     return oldJokes;
   }
-
+ 
   async delete(id) {
     if (id === undefined) {
       throw new Error("Id é obrigatório.");
     }
+   
     const jokesValue = await this.findOne(id);
-    jokesValue.destroy();
-
+    await jokesValue.destroy();
+ 
     return;
   }
 }
-
+ 
 module.exports = new JokesController();
