@@ -2,7 +2,19 @@ const jokes = require("../model/joke");
 
 class JokesController {
   async create(category, type, joke, nsfw, religious, political, racist, sexist, explicit, safe, lang) {
-    if (!category || !type || !joke || !nsfw || !religious || !political || !racist || !sexist || !explicit || !safe || !lang) {
+    if (
+      category === undefined || 
+      type === undefined || 
+      joke === undefined || 
+      nsfw === undefined || 
+      religious === undefined || 
+      political === undefined || 
+      racist === undefined || 
+      sexist === undefined || 
+      explicit === undefined || 
+      safe === undefined || 
+      lang === undefined
+    ) {
       throw new Error("Dados obrigatórios não preenchidos.");
     }
 
