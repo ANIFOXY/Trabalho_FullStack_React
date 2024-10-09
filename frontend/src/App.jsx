@@ -17,14 +17,14 @@ function App() {
   return (
     <AuthProvider>
       <Header />
-      <Route path='/home' element={<Home />}/>
 
       <Routes>
+        <Route path='/home' element={<Home />}/>
         <Route element={<PrivateRoute />}>
-        <Route path='/about' element={<About />}/>
-        <Route path='/ApiJoke' element={<ApiJoke />}/>
-        <Route path='/categories' element={<Categories />}/>
-        <Route path='/favorites' element ={<Favorites />}/>
+          <Route path='/about' element={<About />}/>
+          <Route path='/ApiJoke' element={<ApiJoke />}/>
+          <Route path='/categories' element={<Categories />}/>
+          <Route path='/favorites' element ={<Favorites />}/>
         </Route>
 
         <Route path='/login' element ={<Login />}/>
