@@ -8,9 +8,12 @@ const Cadastro = () => {
     const [cpf, setCpf] = useState('');
     const [phone, setPhone] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-  
+
+        const response = await createUser(( nome, email, senha))
+        console.log(response)
+
         console.log('Nome:', name);
         console.log('Email:', email);
         console.log('Senha:', password);
