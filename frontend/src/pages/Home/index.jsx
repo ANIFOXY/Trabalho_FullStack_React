@@ -1,7 +1,5 @@
 import "./styles.css";
 import { Link } from 'react-router-dom';
-import List from "../../components/List";
-import Forms from "../../components/Forms";
 import FunnyImg from "../../assets/funny-bg.png"
 
 export default function Home() {

@@ -1,12 +1,36 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import "./styles.css";
+import { loginUser } from '../../api/user';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth/Context';
 
-const Login = () => {
+export default function Login() {
+    const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleBackClick = () => {
+        navigate('/');
+    };
+
+    const handleCreateAccount = () => {
+        navigate('/signup')
+    }
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
+        try {
+            const response = await loginUser(email, password)
+            console.log(response)
+            if(response.token) {
+                login(response.token)
+                navigate('/')
+            }
+        } catch (error) {
+            return alert('deu ruim no login')
+        }
 
         console.log('Email:', email);
         console.log('Password:', password);
@@ -46,5 +70,3 @@ const Login = () => {
         </div>
     );
 };
-
-export default Login;
