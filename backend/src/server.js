@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/api/login", UserApi.login);
-app.post("/api/user", UserApi.createUser); 
+app.post("/api/user", UserApi.createUserViewer); 
 
 app.use("/api/user", authMiddleware(), UserRouter);
 app.use("/api/joke", JokeRouter);

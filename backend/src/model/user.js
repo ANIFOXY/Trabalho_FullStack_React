@@ -24,9 +24,9 @@ class User {
       permissao: {
         type: database.db.Sequelize.STRING,
         validate: {
-          isIn: [["admin", "user"]],
+          isIn: [["admin", "viewer"]],
         },
-        defaultValue: "user",
+        defaultValue: "viewer",
       },
       status: {
         type: database.db.Sequelize.ENUM("active", "blocked"),
