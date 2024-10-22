@@ -17,23 +17,24 @@ export default function Login() {
     }
 
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [senha, setPassword] = useState('');
 
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
-            const response = await loginUser(email, password)
+            const response = await loginUser(email, senha)
             console.log(response)
             if(response.token) {
                 login(response.token)
                 navigate('/')
+                console.log("bateu aqui")
             }
         } catch (error) {
             return alert('deu ruim no login')
         }
 
         console.log('Email:', email);
-        console.log('Password:', password);
+        console.log('Password:', senha);
     };
 
     return (
@@ -57,7 +58,7 @@ export default function Login() {
                         type="password"
                         id="password"
                         className="login-input"
-                        value={password}
+                        value={senha}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
