@@ -32,3 +32,4 @@ export const updateJoke = async (id, joke) => {
 export const deleteJoke = async (id) => {
   return api.delete(`/api/joke/${id}`);
 };
+
