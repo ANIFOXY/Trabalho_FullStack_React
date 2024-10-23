@@ -16,6 +16,8 @@
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3",
-    "sequelize": "^6.37.3"
+    "react-toastify": "^10.0.6",
+    "sequelize": "^6.37.3",
+    "toast": "^0.5.4"
   }
 }
