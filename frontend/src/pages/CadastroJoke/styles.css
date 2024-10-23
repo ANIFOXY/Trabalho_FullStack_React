@@ -1,0 +1,61 @@
+/* styles.css */
+
+.joke-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.joke-form h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.joke-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.joke-form button:hover {
+  background-color: #0056b3;
+}
+
+.joke-form input[type="text"], 
+.joke-form select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.joke-form .actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.joke-form .primary {
+  background-color: #28a745;
+}
+
+.joke-form .primary:hover {
+  background-color: #218838;
+}
+
+.joke-form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

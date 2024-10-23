@@ -1,61 +1,67 @@
-import { createContext, useEffect, useState } from "react"
-import { jwtDecode } from 'jwt-decode'
+/* eslint-disable react/prop-types */
+import { createContext, useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
-
-const isValidToken = (token) => {
-    try {
-        const decode = jwtDecode(token);
-        console.log('decodificando', decode)
-        const currentTime = Date.now() / 1000
-        return decode.exp > currentTime
-    } catch (error) {
-        return false
-    }
-}
+// 4 - Adicionar Provider, isTokenValid e getRole
+const isTokenValid = (token) => {
+  try {
+    const decoded = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+    return decoded.exp > currentTime;
+  } catch (error) {
+    return false;
+  }
+};
 
 const getRole = (token) => {
-    try {
-        const decode = jwtDecode(token);
-        console.log('decodificando', decode)
-        return decode.permissao
-    } catch (error) {
-        return false
-    }
-}
+  try {
+    const decoded = jwtDecode(token);
+    console.log(decoded)
+    return decoded.role
+  } catch (error) {
+    return false;
+  }
+};
 
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [ token, setToken ] = useState(null)
-    const [ role, setRole ] = useState(null)
+  const [token, setToken] = useState(null);
+  const [role, setRole] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    const login = (newToken) => {
-        setToken(newToken)
-        setRole(getRole(newToken)) // funcao para pegar a role do token
-        localStorage.setItem('token', newToken)
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken && isTokenValid(storedToken)) {
+      setToken(storedToken);
+      setRole(getRole(storedToken));
+    } else {
+      setToken(null);
+      setRole(null);
+      localStorage.removeItem('token');
     }
-    const logout = () => {
-        setToken(null)
-        setRole(null)
-        localStorage.removeItem('token')    
-    }
+    setLoading(false);
+  }, []);
 
-    useEffect(() => {
-        // validar o token
-        const storage = localStorage.getItem('token')
-        if(storage && isValidToken(storage)){
-            setToken(storage);
-            setRole(getRole(storage));
-        } else {
-            setToken(null)
-            setRole(null)
-            localStorage.removeItem('token')
-        }
-    }, [])
+  const login = (newToken) => {
+    setToken(newToken);
+    setRole(getRole(newToken));
+    localStorage.setItem('token', newToken);
+  };
 
-    return (
-        <AuthContext.Provider value={{ token, role, login, logout }}>
-            { children }
-        </AuthContext.Provider>
-    )
-}
+  const logout = () => {
+    setToken(null);
+    setRole(null);
+    localStorage.removeItem('token');
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <AuthContext.Provider value={{ token, login, logout, role }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};

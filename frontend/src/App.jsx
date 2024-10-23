@@ -9,6 +9,7 @@ import Categories from "./pages/Categories";
 import Favorites from "./pages/Favorites.jsx";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
+import CadastroPiada from "./pages/CadastroJoke";
 import { AuthProvider } from "./auth/Context.jsx";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
 
@@ -25,6 +26,7 @@ function App() {
           <Route path='/ApiJoke' element={<ApiJoke />}/>
           <Route path='/categories' element={<Categories />}/>
           <Route path='/favorites' element ={<Favorites />}/>
+          <Route path='/cadastroPiada' element={<CadastroPiada/>}/>
         </Route>
 
         <Route path='/login' element ={<Login />}/>
