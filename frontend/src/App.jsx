@@ -27,6 +27,7 @@ function App() {
           <Route path='/categories' element={<Categories />}/>
           <Route path='/favorites' element ={<Favorites />}/>
           <Route path='/cadastroPiada' element={<CadastroPiada/>}/>
+          <Route path='/cadastroPiada/:id' element={<CadastroPiada />} />
         </Route>
 
         <Route path='/login' element ={<Login />}/>
