@@ -28,9 +28,10 @@ export default function Login() {
                 login(response.token)
                 navigate('/')
                 console.log("bateu aqui")
+                navigate('/home');
             }
         } catch (error) {
-            return alert('deu ruim no login')
+            return alert('Usuário e/ou senha errados')
         }
 
         console.log('Email:', email);

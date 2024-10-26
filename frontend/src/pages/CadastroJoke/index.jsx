@@ -1,14 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './styles.css';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { createJoke, updateJoke, deleteJoke } from '../../api/joke'; 
+import { useNavigate, useParams } from 'react-router-dom';
+import { createJoke, updateJoke, deleteJoke, getJokeById } from '../../api/joke'; 
 
 export default function JokeForm() {
-  const location = useLocation();
-  const { isUpdate, joke } = location.state || {};
   const navigate = useNavigate();
-  
-  const [jokeData, setJokeData] = useState(joke || {
+  const { id } = useParams(); // Obtendo o ID da URL
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [jokeData, setJokeData] = useState({
     id: '',
     category: '',
     type: 'single',
@@ -25,7 +24,27 @@ export default function JokeForm() {
     lang: 'en',
   });
 
-  const goBack = () => navigate('/jokes');
+  useEffect(() => {
+    const fetchJoke = async () => {
+      if (id) {
+        setIsUpdate(true);
+        try {
+          const joke = await getJokeById(id);
+          console.log("Fetched joke data:", joke); // Verifique os dados da piada aqui
+          setJokeData(joke);
+        } catch (error) {
+          console.error("Error fetching joke:", error);
+          alert('Erro ao buscar a piada.');
+        }
+      } else {
+        setIsUpdate(false);
+      }
+    };
+
+    fetchJoke();
+  }, [id]); // Dependência no ID
+
+  const goBack = () => navigate('/apiJoke');
 
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
@@ -38,17 +57,16 @@ export default function JokeForm() {
   const handleAddSave = async () => {
     try {
       if (isUpdate) {
-        console.log("Updating joke with ID:", jokeData.id); // Debugging log
+        console.log("Updating joke with ID:", jokeData.id); 
         await updateJoke(jokeData.id, jokeData);
       } else {
-        console.log("Creating new joke"); // Debugging log
+        console.log("Creating new joke"); 
         await createJoke(jokeData);
       }
-      navigate('/jokes');
+      navigate('/apiJoke');
     } catch (error) {
-      console.error("Error saving joke:", error); // Debugging log
+      console.error("Error saving joke:", error); 
       alert('Erro ao salvar a piada. Tente novamente.');
-      navigate('/jokes');
     }
   };
 
@@ -57,11 +75,11 @@ export default function JokeForm() {
 
     if (confirmDelete) {
       try {
-        console.log("Deleting joke with ID:", jokeData.id); // Debugging log
+        console.log("Deleting joke with ID:", jokeData.id); 
         await deleteJoke(jokeData.id);
-        navigate('/jokes');
+        navigate('/apiJoke');
       } catch (error) {
-        console.error("Error deleting joke:", error); // Debugging log
+        console.error("Error deleting joke:", error); 
         alert('Erro ao deletar a piada.');
       }
     }

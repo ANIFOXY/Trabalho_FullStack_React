@@ -1,0 +1,73 @@
+/* profile.css */
+
+.profile-wrapper {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-wrapper h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.profile-input-group {
+    margin-bottom: 15px;
+}
+
+.profile-input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.profile-input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.profile-update-button,
+.profile-delete-button,
+.profile-logout-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.profile-update-button {
+    background-color: #4caf50; /* Verde para atualização */
+}
+
+.profile-update-button:hover {
+    background-color: #45a049;
+}
+
+.profile-delete-button {
+    background-color: #f44336; /* Vermelho para exclusão */
+}
+
+.profile-delete-button:hover {
+    background-color: #d32f2f;
+}
+
+.profile-logout-button {
+    background-color: #555; /* Cinza para logout */
+}
+
+.profile-logout-button:hover {
+    background-color: #333;
+}
