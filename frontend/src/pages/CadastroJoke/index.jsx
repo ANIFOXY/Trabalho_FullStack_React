@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './styles.css';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { createJoke, updateJoke, deleteJoke, getJokeById } from '../../api/joke'; 
 
 export default function JokeForm() {
@@ -30,6 +30,7 @@ export default function JokeForm() {
         setIsUpdate(true);
         try {
           const joke = await getJokeById(id);
+          console.log("Fetched joke data:", joke); // Verifique os dados da piada aqui
           setJokeData(joke);
         } catch (error) {
           console.error("Error fetching joke:", error);
@@ -43,7 +44,7 @@ export default function JokeForm() {
     fetchJoke();
   }, [id]); // Dependência no ID
 
-  const goBack = () => navigate('/jokes');
+  const goBack = () => navigate('/apiJoke');
 
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
@@ -62,7 +63,7 @@ export default function JokeForm() {
         console.log("Creating new joke"); 
         await createJoke(jokeData);
       }
-      navigate('/jokes');
+      navigate('/apiJoke');
     } catch (error) {
       console.error("Error saving joke:", error); 
       alert('Erro ao salvar a piada. Tente novamente.');
@@ -76,7 +77,7 @@ export default function JokeForm() {
       try {
         console.log("Deleting joke with ID:", jokeData.id); 
         await deleteJoke(jokeData.id);
-        navigate('/jokes');
+        navigate('/apiJoke');
       } catch (error) {
         console.error("Error deleting joke:", error); 
         alert('Erro ao deletar a piada.');

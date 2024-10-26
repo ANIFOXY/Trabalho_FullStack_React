@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { FaUser } from 'react-icons/fa'; // Importando o ícone de usuário
 import './styles.css';
 
 export default function Header() {
@@ -25,7 +26,11 @@ export default function Header() {
                     <li className="nav-item">
                         <Link to="/login" className="nav-link button-login">Login</Link>
                     </li>
-                    
+                    <li className="nav-item">
+                        <Link to="/profile" className="nav-link">
+                            <FaUser size={20} />Perfil
+                        </Link>
+                    </li>
                 </ul>
             </nav>
         </header>

@@ -12,6 +12,8 @@ import Cadastro from "./pages/Cadastro";
 import CadastroPiada from "./pages/CadastroJoke";
 import { AuthProvider } from "./auth/Context.jsx";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
+import Profile from "./components/Profile";
+import JokeManager from './components/JokeManager';
 
 
 function App() {
@@ -28,9 +30,11 @@ function App() {
           <Route path='/favorites' element ={<Favorites />}/>
           <Route path='/cadastroPiada' element={<CadastroPiada/>}/>
           <Route path='/cadastroPiada/:id' element={<CadastroPiada />} />
+          <Route path="/manageJoke" element={<JokeManager />} />
         </Route>
 
         <Route path='/login' element ={<Login />}/>
+        <Route path="/profile" element={<Profile />} /> 
         <Route path='/cadastro' element ={<Cadastro />}/>
       </Routes>
       

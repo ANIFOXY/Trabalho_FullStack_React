@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./styles.css";
 import { createUser } from '../../api/user.jsx';
-
 
 const Cadastro = () => {
     const [nome, setName] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setPassword] = useState('');
+    const navigate = useNavigate(); 
 
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        const response = await createUser({  nome, email, senha })
-        console.log(response)
-
-        console.log('Nome:', nome);
-        console.log('Email:', email);
-        console.log('Senha:', senha);
+        try {
+            const response = await createUser({ nome, email, senha });
+            console.log(response);
+            
+            alert('Cadastro realizado com sucesso!');
+            navigate('/login'); 
+        } catch (error) {
+            console.error('Erro ao cadastrar:', error);
+            alert('Erro ao realizar o cadastro. Tente novamente.');
+        }
     };
 
     return (

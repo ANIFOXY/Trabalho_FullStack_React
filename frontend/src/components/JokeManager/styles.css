@@ -1,0 +1,25 @@
+.joke-manager {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+  }
+  
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Ajuste conforme necessário */
+  }
+  
+  .card h2 {
+    margin-top: 0;
+  }
+  
+  .card input,
+  .card select,
+  .card button {
+    width: 100%;
+    margin: 8px 0;
+  }
+  
