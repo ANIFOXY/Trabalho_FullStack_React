@@ -2,30 +2,32 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../auth/Context';
 import { getUserById, updateUser, deleteUser } from '../../api/user';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 const Profile = () => {
     const { user, logout } = useContext(AuthContext);
-    const navigate = useNavigate();
     const [userData, setUserData] = useState(null);
     const [isUpdate, setIsUpdate] = useState(false);
     const [updNome, setUpdNome] = useState('');
     const [updEmail, setUpdEmail] = useState('');
+    const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         const fetchUserData = async () => {
-            if (user && user.id) {
-                const data = await getUserById(user.id);
-                setUserData(data);
-                setUpdNome(data.nome);
-                setUpdEmail(data.email);
-            } else {
-                navigate('/login'); 
+            try {
+                console.log(user.id)
+                console.log("bateu aqui")
+                const response = await getUserById(user.id);
+                setUserData(response);
+                setUpdNome(response.nome);
+                setUpdEmail(response.email);
+            } catch (error) {
+                setErrorMessage('Erro inesperado, tente novamente mais tarde!');
             }
         };
 
         fetchUserData();
-    }, [user, navigate]);
+    }, [user.id]);
 
     const handleSaveUpdate = async () => {
         try {
@@ -35,7 +37,7 @@ const Profile = () => {
                 setIsUpdate(false);
             }
         } catch (error) {
-            toast('Erro inesperado, tente novamente mais tarde!');
+            setErrorMessage('Erro inesperado, tente novamente mais tarde!');
         }
     };
 
@@ -51,12 +53,20 @@ const Profile = () => {
                 logout();
                 navigate('/');
             } else {
-                toast("Email inválido, processo cancelado.");
+                setErrorMessage("Email inválido, processo cancelado.");
             }
         } catch (error) {
-            toast('Erro inesperado, tente novamente mais tarde!');
+            setErrorMessage('Erro inesperado, tente novamente mais tarde!');
         }
     };
+
+    if (errorMessage) {
+        return (
+            <div>
+                <p>{errorMessage}</p>
+            </div>
+        );
+    }
 
     if (!userData) {
         return <div>Carregando...</div>; 

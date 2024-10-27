@@ -23,8 +23,8 @@ export const deleteUser = async (id) => {
 }
 
 export const getUserById = async (id) => {
-    const response = await api.get(`/api/user/${id}`)
-    return response.data
+    const response = await api.get(`/api/user/${id}`);
+    return response.data;
 }
 
 export const getUsers = async () => {
@@ -34,6 +34,19 @@ export const getUsers = async () => {
 
 export const loginUser = async (email, senha) => {
     const body = { email, senha }
-    const response = await api.post(`/api/login`, body) // Mantido a URL correta
+    const response = await api.post(`/api/login`, body) 
     return response.data
 }
+
+export const findUser = async (id) => {
+    if (id === undefined) {
+        throw new Error("Id é obrigatório.");
+    }
+    const userValue = await user.findByPk(id);
+    if (!userValue) {
+        throw new Error("Usuário não encontrado.");
+    }
+    return userValue;
+}
+
+

@@ -132,8 +132,8 @@ export default function JokePage() {
       </button>
 
       {role === 'admin' && (
-        <Link to="/manageJoke" className='manage-joke-button'>
-          Gerenciar Piadas
+        <Link to="/manageJoke" className="admin-link">
+          Página de administração
         </Link>
       )}
     </div>
