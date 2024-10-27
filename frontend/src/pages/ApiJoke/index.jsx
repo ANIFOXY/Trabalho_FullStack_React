@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom'; // Importando o Link
+import { AuthContext } from '../../auth/Context'; // Importando o contexto de autenticação
 import './styles.css';
 
 export default function JokePage() {
+  const { role } = useContext(AuthContext); // Obtendo a role do usuário
   const [currentJoke, setCurrentJoke] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -128,6 +131,11 @@ export default function JokePage() {
         Outra piada
       </button>
 
+      {role === 'admin' && (
+        <Link to="/manageJoke" className='manage-joke-button'>
+          Gerenciar Piadas
+        </Link>
+      )}
     </div>
   );
 }
