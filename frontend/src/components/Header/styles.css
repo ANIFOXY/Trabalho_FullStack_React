@@ -43,6 +43,8 @@ body {
     padding: 0.5rem 1rem;
     transition: background-color 0.3s, color 0.3s;
     font-family: "JetBrains Mono", monospace;
+    display: flex; 
+    align-items: center; 
 }
 
 .nav-link:hover {
@@ -65,16 +67,20 @@ body {
     background-color: #5a0792; 
 }
 
-.nav-link {
-    color: #dfdfdf;
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    transition: background-color 0.3s, color 0.3s;
-    font-family: "JetBrains Mono", monospace;
-    display: flex; 
-    align-items: center; 
-}
-
 .nav-link svg {
     margin-right: 5px; 
+}
+
+.button-admin {
+    background-color: #ff5722; 
+    color: white; 
+    padding: 0.5rem 1rem; 
+    border-radius: 5px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    transition: background-color 0.3s; 
+}
+
+.button-admin:hover {
+    background-color: #e64a19; 
 }

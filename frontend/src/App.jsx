@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import About from "./pages/About";
 import Home from "./pages/Home";
 import ApiJoke from "./pages/ApiJoke";
 import Categories from "./pages/Categories";
@@ -24,7 +23,6 @@ function App() {
       <Routes>
         <Route path='/home' element={<Home />}/>
         <Route element={<PrivateRoute />}>
-          <Route path='/about' element={<About />}/>
           <Route path='/ApiJoke' element={<ApiJoke />}/>
           <Route path='/categories' element={<Categories />}/>
           <Route path='/favorites' element ={<Favorites />}/>

@@ -10,8 +10,13 @@ export default function JokeManager() {
     category: '',
     type: 'single',
     joke: '',
-    setup: '',
-    delivery: '',
+    nsfw: false,
+    religious: false,
+    political: false,
+    racist: false,
+    sexist: false,
+    explicit: false,
+    safe: true,
     lang: 'en',
   });
   
@@ -19,16 +24,17 @@ export default function JokeManager() {
   const [isUpdate, setIsUpdate] = useState(false);
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
+    const { id, value, type, checked } = e.target;
     setJokeData({
       ...jokeData,
-      [id]: value,
+      [id]: type === 'checkbox' ? checked : value,
     });
   };
 
   const handleAddSave = async () => {
     try {
-      if (!jokeData.joke || !jokeData.category) {
+      const { joke, category } = jokeData;
+      if (!joke || !category) {
         alert('Por favor, preencha todos os campos obrigatórios.');
         return;
       }
@@ -84,8 +90,13 @@ export default function JokeManager() {
         category: '',
         type: 'single',
         joke: '',
-        setup: '',
-        delivery: '',
+        nsfw: false,
+        religious: false,
+        political: false,
+        racist: false,
+        sexist: false,
+        explicit: false,
+        safe: true,
         lang: 'en',
       });
     }
@@ -140,6 +151,37 @@ export default function JokeManager() {
           <option value="fr">Francês</option>
           <option value="it">Italiano</option>
         </select>
+        {/* Adicionando checkboxes para nsfw, religious, etc. */}
+        <div>
+          <label>
+            <input type="checkbox" id='nsfw' checked={jokeData.nsfw} onChange={handleChange} />
+            NSFW
+          </label>
+          <label>
+            <input type="checkbox" id='religious' checked={jokeData.religious} onChange={handleChange} />
+            Religioso
+          </label>
+          <label>
+            <input type="checkbox" id='political' checked={jokeData.political} onChange={handleChange} />
+            Político
+          </label>
+          <label>
+            <input type="checkbox" id='racist' checked={jokeData.racist} onChange={handleChange} />
+            Racista
+          </label>
+          <label>
+            <input type="checkbox" id='sexist' checked={jokeData.sexist} onChange={handleChange} />
+            Sexista
+          </label>
+          <label>
+            <input type="checkbox" id='explicit' checked={jokeData.explicit} onChange={handleChange} />
+            Explícito
+          </label>
+          <label>
+            <input type="checkbox" id='safe' checked={jokeData.safe} onChange={handleChange} />
+            Seguro
+          </label>
+        </div>
         <button onClick={handleAddSave}>
           {isUpdate ? 'Alterar Piada' : 'Adicionar Piada'}
         </button>
