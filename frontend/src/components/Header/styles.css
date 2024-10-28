@@ -43,6 +43,8 @@ body {
     padding: 0.5rem 1rem;
     transition: background-color 0.3s, color 0.3s;
     font-family: "JetBrains Mono", monospace;
+    display: flex; 
+    align-items: center; 
 }
 
 .nav-link:hover {
@@ -52,15 +54,33 @@ body {
 }
 
 .button-login {
-    background-color: #3b0261; /* Cor de fundo */
-    color: white; /* Cor do texto */
-    padding: 0.5rem 3rem; /* Espaçamento */
-    border-radius: 5px; /* Bordas arredondadas */
-    text-decoration: none; /* Remove o sublinhado */
-    font-weight: bold; /* Fonte em negrito */
-    transition: background-color 0.3s; /* Efeito de transição */
+    background-color: #3b0261; 
+    color: white; 
+    padding: 0.5rem 3rem; 
+    border-radius: 5px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    transition: background-color 0.3s; 
 }
 
 .button-login:hover {
-    background-color: #5a0792; /* Cor de fundo ao passar o mouse */
+    background-color: #5a0792; 
+}
+
+.nav-link svg {
+    margin-right: 5px; 
+}
+
+.button-admin {
+    background-color: #ff5722; 
+    color: white; 
+    padding: 0.5rem 1rem; 
+    border-radius: 5px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    transition: background-color 0.3s; 
+}
+
+.button-admin:hover {
+    background-color: #e64a19; 
 }

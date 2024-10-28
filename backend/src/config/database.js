@@ -10,7 +10,7 @@ class Database {
         this.db = new Sequelize({
             database:"apiRenan",
             host:"localhost",
-            password:"root",
+            password:"",
             username:"root",
             dialect:"mysql"
         })

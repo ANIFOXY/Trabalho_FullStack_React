@@ -1,25 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
 footer {
-    background-color: #9e9e9e; /* Cor de fundo escura */
-    color: #ffffff; /* Cor do texto branca */
-    text-align: center; /* Alinha o texto ao centro */
-    padding: 1rem; /* Espaçamento interno */
-    position: fixed; /* Fixa o footer na parte inferior da página */
-    bottom: 0; /* Posiciona o footer na parte inferior */
-    width: 100%; /* Faz o footer ocupar toda a largura da página */
-    border-top: 1px solid #6c757d; /* Adiciona uma borda superior */
+    background-color: #9e9e9e; 
+    color: #ffffff; 
+    text-align: center; 
+    padding: 1rem; 
+    position: fixed; 
+    bottom: 0; 
+    width: 100%; 
+    border-top: 1px solid #6c757d;
     font-family: "JetBrains Mono", monospace;
     font-size: small;
 }
 
-/* Estilização do conteúdo do footer */
 footer p {
-    margin: 0; /* Remove a margem do parágrafo */
-    font-size: 0.875rem; /* Tamanho da fonte */
+    margin: 0; 
+    font-size: 0.875rem; 
 }
 
-/* Adiciona um espaçamento para o rodapé quando o conteúdo é muito pequeno */
 body {
-    padding-bottom: 3rem; /* Espaçamento inferior igual à altura do footer */
+    padding-bottom: 3rem; 
 }

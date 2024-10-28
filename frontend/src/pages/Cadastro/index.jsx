@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./styles.css";
+import { createUser } from '../../api/user.jsx';
 
 const Cadastro = () => {
-    const [name, setName] = useState('');
+    const [nome, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [cpf, setCpf] = useState('');
-    const [phone, setPhone] = useState('');
+    const [senha, setPassword] = useState('');
+    const navigate = useNavigate(); 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-  
-        console.log('Nome:', name);
-        console.log('Email:', email);
-        console.log('Senha:', password);
-        console.log('CPF:', cpf);
-        console.log('Telefone:', phone);
+
+        try {
+            const response = await createUser({ nome, email, senha });
+            console.log(response);
+            
+            alert('Cadastro realizado com sucesso!');
+            navigate('/login'); 
+        } catch (error) {
+            console.error('Erro ao cadastrar:', error);
+            alert('Erro ao realizar o cadastro. Tente novamente.');
+        }
     };
 
     return (
@@ -28,7 +34,7 @@ const Cadastro = () => {
                         type="text"
                         id="name"
                         className="cadastro-input"
-                        value={name}
+                        value={nome}
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
@@ -50,30 +56,8 @@ const Cadastro = () => {
                         type="password"
                         id="password"
                         className="cadastro-input"
-                        value={password}
+                        value={senha}
                         onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="cadastro-input-group">
-                    <label htmlFor="cpf" className="cadastro-label">CPF:</label>
-                    <input
-                        type="text"
-                        id="cpf"
-                        className="cadastro-input"
-                        value={cpf}
-                        onChange={(e) => setCpf(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="cadastro-input-group">
-                    <label htmlFor="phone" className="cadastro-label">Telefone:</label>
-                    <input
-                        type="text"
-                        id="phone"
-                        className="cadastro-input"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
                         required
                     />
                 </div>

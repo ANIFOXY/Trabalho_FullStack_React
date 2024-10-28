@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
+// import { FaUser } from 'react-icons/fa';
+import { useAuth } from '../../auth/Context';
 import './styles.css';
 
 export default function Header() {
+    const { user } = useAuth();
+    console.log('User:', user); 
+    
     return (
         <header className="header">
             <h1 className="header-title">API de Piadas</h1>
@@ -20,10 +25,12 @@ export default function Header() {
                         <Link to="/categories" className="nav-link">Categorias</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/about" className="nav-link">Sobre</Link>
+                        <Link to="/login" className="nav-link button-login">Login</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/login" className="nav-link button-login">Login</Link>
+                        <Link to="/profile" className="nav-link">
+                            Perfil 
+                        </Link> 
                     </li>
                 </ul>
             </nav>

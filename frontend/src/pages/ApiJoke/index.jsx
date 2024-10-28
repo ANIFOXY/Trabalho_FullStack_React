@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom'; 
+import { AuthContext } from '../../auth/Context'; 
 import './styles.css';
 
 export default function JokePage() {
+  const { role } = useContext(AuthContext); // para obter o role do usuario
   const [currentJoke, setCurrentJoke] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,6 +13,7 @@ export default function JokePage() {
   const [selectedCategory, setSelectedCategory] = useState('');
 
   async function fetchJokes(type, language, category) {
+    console.log(role, "batata")
     try {
       let url = `https://v2.jokeapi.dev/joke/${type}?lang=${language}`;
       if (category) {
@@ -128,6 +132,11 @@ export default function JokePage() {
         Outra piada
       </button>
 
+      {role === 'admin' && (
+        <Link to="/manageJoke" className="admin-link">
+          MANAGER
+        </Link>
+      )}
     </div>
   );
 }

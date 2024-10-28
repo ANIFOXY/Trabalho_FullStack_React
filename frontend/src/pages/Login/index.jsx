@@ -1,15 +1,41 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import "./styles.css";
+import { loginUser } from '../../api/user';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth/Context';
 
-const Login = () => {
+export default function Login() {
+    const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleBackClick = () => {
+        navigate('/');
+    };
+
+    const handleCreateAccount = () => {
+        navigate('/signup')
+    }
+
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [senha, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
+        try {
+            const response = await loginUser(email, senha)
+            console.log(response)
+            if(response.token) {
+                login(response.token)
+                navigate('/')
+                console.log("bateu aqui")
+                navigate('/home');
+            }
+        } catch (error) {
+            return alert('Usuário e/ou senha errados')
+        }
 
         console.log('Email:', email);
-        console.log('Password:', password);
+        console.log('Password:', senha);
     };
 
     return (
@@ -33,7 +59,7 @@ const Login = () => {
                         type="password"
                         id="password"
                         className="login-input"
-                        value={password}
+                        value={senha}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
@@ -46,5 +72,3 @@ const Login = () => {
         </div>
     );
 };
-
-export default Login;

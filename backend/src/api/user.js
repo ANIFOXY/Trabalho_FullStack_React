@@ -1,16 +1,32 @@
 const UserController = require('../controller/user');
 
 class UserApi {
-    async createUser(req, res) {
-        const { nome, email, senha, permissao } = req.body;
+    async createUserViewer(req, res) {
+        const { nome, email, senha } = req.body;
+        console.log ("entrou aqui")
 
         try {
-            const user = await UserController.createUser(nome, email, senha, permissao);
+            const user = await UserController.createUser(nome, email, senha, "viewer");
             return res.status(201).send(user);
         } catch (e) {
+            console.log(e)
             return res.status(400).send({ error: `Erro ao criar usuário: ${e.message}` });
         }
     }
+
+    async createUserAdmin(req, res) {
+        const { nome, email, senha } = req.body;
+        console.log (req.body)
+
+        try {
+            const user = await UserController.createUser(nome, email, senha, "admin");
+            return res.status(201).send(user);
+        } catch (e) {
+            console.log(e)
+            return res.status(400).send({ error: `Erro ao criar usuário: ${e.message}` });
+        }
+    }
+
 
     async updateUser(req, res) {
         const { id } = req.params;
