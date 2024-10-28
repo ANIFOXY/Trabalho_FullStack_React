@@ -5,7 +5,7 @@ import { createJoke, updateJoke, deleteJoke, getJokeById } from '../../api/joke'
 
 export default function JokeForm() {
   const navigate = useNavigate();
-  const { id } = useParams(); // Obtendo o ID da URL
+  const { id } = useParams(); 
   const [isUpdate, setIsUpdate] = useState(false);
   const [jokeData, setJokeData] = useState({
     id: '',
@@ -41,7 +41,7 @@ export default function JokeForm() {
     };
 
     fetchJoke();
-  }, [id]); // Dependência no ID
+  }, [id]); 
 
   const goBack = () => navigate('/jokes');
 

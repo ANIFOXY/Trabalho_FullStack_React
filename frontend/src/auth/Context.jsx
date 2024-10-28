@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
-// Hook para usar o contexto de autenticação
+// hook para usar o contexto de autenticação
 export const useAuth = () => {
     return useContext(AuthContext);
 };

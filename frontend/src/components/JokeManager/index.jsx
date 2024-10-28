@@ -151,7 +151,7 @@ export default function JokeManager() {
           <option value="fr">Francês</option>
           <option value="it">Italiano</option>
         </select>
-        {/* Adicionando checkboxes para nsfw, religious, etc. */}
+
         <div>
           <label>
             <input type="checkbox" id='nsfw' checked={jokeData.nsfw} onChange={handleChange} />
