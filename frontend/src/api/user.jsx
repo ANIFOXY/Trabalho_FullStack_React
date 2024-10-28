@@ -22,8 +22,8 @@ export const deleteUser = async (id) => {
     return api.delete(`/api/user/${id}`) // Corrigido o erro de digitação
 }
 
-export const getUserById = async (id) => {
-    const response = await api.get(`/api/user/${id}`);
+export const getUserById = async () => {
+    const response = await api.get(`/api/user/session`);
     return response.data;
 }
 

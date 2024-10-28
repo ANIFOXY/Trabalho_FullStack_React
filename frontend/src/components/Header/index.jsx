@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { FaUser } from 'react-icons/fa';
+// import { FaUser } from 'react-icons/fa';
 import { useAuth } from '../../auth/Context';
 import './styles.css';
 
 export default function Header() {
     const { user } = useAuth();
-    console.log('User:', user); // Debugging
+    console.log('User:', user); 
     
     return (
         <header className="header">
@@ -29,8 +29,8 @@ export default function Header() {
                     </li>
                     <li className="nav-item">
                         <Link to="/profile" className="nav-link">
-                            <FaUser size={20} />Perfil
-                        </Link>
+                            Perfil 
+                        </Link> 
                     </li>
                 </ul>
             </nav>

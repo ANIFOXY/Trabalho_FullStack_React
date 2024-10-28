@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../auth/Context';
 import { getUserById, updateUser, deleteUser } from '../../api/user';
 import { useNavigate } from 'react-router-dom';
+import './styles.css';
 
 const Profile = () => {
     const { user, logout } = useContext(AuthContext);
@@ -15,8 +16,6 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                console.log(user.id)
-                console.log("bateu aqui")
                 const response = await getUserById(user.id);
                 setUserData(response);
                 setUpdNome(response.nome);
@@ -62,32 +61,32 @@ const Profile = () => {
 
     if (errorMessage) {
         return (
-            <div>
+            <div className='profile-error'>
                 <p>{errorMessage}</p>
             </div>
         );
     }
 
     if (!userData) {
-        return <div>Carregando...</div>; 
+        return <div className='profile-loading'>Carregando...</div>; 
     }
 
     return (
-        <div className='profile'>
-            <div className='info'>
-                <h1>Dados do seu perfil</h1>
-                <p>Nome: {!isUpdate ? userData.nome : <input type='text' value={updNome} onChange={(e) => setUpdNome(e.target.value)} />} </p>
-                <p>Email: {!isUpdate ? userData.email : <input type='email' value={updEmail} onChange={(e) => setUpdEmail(e.target.value)} />} </p>
+        <div className='profile-container'>
+            <div className='profile-info'>
+                <h1 className='profile-title'>Dados do seu perfil</h1>
+                <p>Nome: {!isUpdate ? userData.nome : <input className='profile-input' type='text' value={updNome} onChange={(e) => setUpdNome(e.target.value)} />} </p>
+                <p>Email: {!isUpdate ? userData.email : <input className='profile-input' type='email' value={updEmail} onChange={(e) => setUpdEmail(e.target.value)} />} </p>
                 {
                     !isUpdate ? 
-                    <div className='actions'>
-                        <button onClick={handleClickDelete}>Excluir Conta</button>
-                        <button className='primary' onClick={handleClickUpdate}>Alterar Dados</button>
+                    <div className='profile-actions'>
+                        <button className='profile-delete-button' onClick={handleClickDelete}>Excluir Conta</button>
+                        <button className='profile-primary-button' onClick={handleClickUpdate}>Alterar Dados</button>
                     </div>
                     : 
-                    <div className='actions'>
-                        <button onClick={() => setIsUpdate(false)}>Cancelar</button>
-                        <button className='primary' onClick={handleSaveUpdate}>Salvar</button>
+                    <div className='profile-actions'>
+                        <button className='profile-cancel-button' onClick={() => setIsUpdate(false)}>Cancelar</button>
+                        <button className='profile-primary-button' onClick={handleSaveUpdate}>Salvar</button>
                     </div>
                 }
             </div>
