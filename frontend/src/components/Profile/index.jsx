@@ -2,30 +2,31 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../auth/Context';
 import { getUserById, updateUser, deleteUser } from '../../api/user';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import './styles.css';
 
 const Profile = () => {
     const { user, logout } = useContext(AuthContext);
-    const navigate = useNavigate();
     const [userData, setUserData] = useState(null);
     const [isUpdate, setIsUpdate] = useState(false);
     const [updNome, setUpdNome] = useState('');
     const [updEmail, setUpdEmail] = useState('');
+    const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         const fetchUserData = async () => {
-            if (user && user.id) {
-                const data = await getUserById(user.id);
-                setUserData(data);
-                setUpdNome(data.nome);
-                setUpdEmail(data.email);
-            } else {
-                navigate('/login'); 
+            try {
+                const response = await getUserById(user.id);
+                setUserData(response);
+                setUpdNome(response.nome);
+                setUpdEmail(response.email);
+            } catch (error) {
+                setErrorMessage('Erro inesperado, tente novamente mais tarde!');
             }
         };
 
         fetchUserData();
-    }, [user, navigate]);
+    }, [user.id]);
 
     const handleSaveUpdate = async () => {
         try {
@@ -35,7 +36,7 @@ const Profile = () => {
                 setIsUpdate(false);
             }
         } catch (error) {
-            toast('Erro inesperado, tente novamente mais tarde!');
+            setErrorMessage('Erro inesperado, tente novamente mais tarde!');
         }
     };
 
@@ -51,33 +52,41 @@ const Profile = () => {
                 logout();
                 navigate('/');
             } else {
-                toast("Email inválido, processo cancelado.");
+                setErrorMessage("Email inválido, processo cancelado.");
             }
         } catch (error) {
-            toast('Erro inesperado, tente novamente mais tarde!');
+            setErrorMessage('Erro inesperado, tente novamente mais tarde!');
         }
     };
 
+    if (errorMessage) {
+        return (
+            <div className='profile-error'>
+                <p>{errorMessage}</p>
+            </div>
+        );
+    }
+
     if (!userData) {
-        return <div>Carregando...</div>; 
+        return <div className='profile-loading'>Carregando...</div>; 
     }
 
     return (
-        <div className='profile'>
-            <div className='info'>
-                <h1>Dados do seu perfil</h1>
-                <p>Nome: {!isUpdate ? userData.nome : <input type='text' value={updNome} onChange={(e) => setUpdNome(e.target.value)} />} </p>
-                <p>Email: {!isUpdate ? userData.email : <input type='email' value={updEmail} onChange={(e) => setUpdEmail(e.target.value)} />} </p>
+        <div className='profile-container'>
+            <div className='profile-info'>
+                <h1 className='profile-title'>Dados do seu perfil</h1>
+                <p>Nome: {!isUpdate ? userData.nome : <input className='profile-input' type='text' value={updNome} onChange={(e) => setUpdNome(e.target.value)} />} </p>
+                <p>Email: {!isUpdate ? userData.email : <input className='profile-input' type='email' value={updEmail} onChange={(e) => setUpdEmail(e.target.value)} />} </p>
                 {
                     !isUpdate ? 
-                    <div className='actions'>
-                        <button onClick={handleClickDelete}>Excluir Conta</button>
-                        <button className='primary' onClick={handleClickUpdate}>Alterar Dados</button>
+                    <div className='profile-actions'>
+                        <button className='profile-delete-button' onClick={handleClickDelete}>Excluir Conta</button>
+                        <button className='profile-primary-button' onClick={handleClickUpdate}>Alterar Dados</button>
                     </div>
                     : 
-                    <div className='actions'>
-                        <button onClick={() => setIsUpdate(false)}>Cancelar</button>
-                        <button className='primary' onClick={handleSaveUpdate}>Salvar</button>
+                    <div className='profile-actions'>
+                        <button className='profile-cancel-button' onClick={() => setIsUpdate(false)}>Cancelar</button>
+                        <button className='profile-primary-button' onClick={handleSaveUpdate}>Salvar</button>
                     </div>
                 }
             </div>

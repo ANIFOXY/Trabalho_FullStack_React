@@ -13,6 +13,7 @@ export default function JokePage() {
   const [selectedCategory, setSelectedCategory] = useState('');
 
   async function fetchJokes(type, language, category) {
+    console.log(role, "batata")
     try {
       let url = `https://v2.jokeapi.dev/joke/${type}?lang=${language}`;
       if (category) {
@@ -132,8 +133,8 @@ export default function JokePage() {
       </button>
 
       {role === 'admin' && (
-        <Link to="/manageJoke" className='manage-joke-button'>
-          Gerenciar Piadas
+        <Link to="/manageJoke" className="admin-link">
+          MANAGER
         </Link>
       )}
     </div>

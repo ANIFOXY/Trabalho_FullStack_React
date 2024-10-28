@@ -14,7 +14,8 @@ const isTokenValid = (token) => {
 const getRole = (token) => {
     try {
         const decoded = jwtDecode(token);
-        return decoded.role;
+        console.log(decoded)
+        return decoded.permissao;
     } catch (error) {
         return false;
     }
