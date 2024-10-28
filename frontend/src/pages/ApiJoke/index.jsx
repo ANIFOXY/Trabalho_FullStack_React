@@ -1,10 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom'; // Importando o Link
-import { AuthContext } from '../../auth/Context'; // Importando o contexto de autenticação
+import { Link } from 'react-router-dom'; 
+import { AuthContext } from '../../auth/Context'; 
 import './styles.css';
 
 export default function JokePage() {
-  const { role } = useContext(AuthContext); // Obtendo a role do usuário
+  const { role } = useContext(AuthContext); // para obter o role do usuario
   const [currentJoke, setCurrentJoke] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
