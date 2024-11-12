@@ -27,6 +27,11 @@ export const getUserById = async () => {
     return response.data;
 }
 
+export const getUserByIdSpecific = async (id) => {
+    const response = await api.get(`/api/user/${id}`);
+    return response.data;
+}
+
 export const getUsers = async () => {
     const response = await api.get(`/api/user/`)
     return response.data
