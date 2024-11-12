@@ -83,50 +83,8 @@ export default function JokeManager() {
     }
   };
 
-  const fetchUser = async () => {
-    if (userIdToEdit) {
-      try {
-        const user = await getUserById(userIdToEdit); 
-        setUserData(user);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        alert('Erro ao buscar o usuário. ' + error.message);
-      }
-    } else {
-      alert('Por favor, insira um ID de usuário válido.');
-    }
-  };
-
-  const handleUpdateUser = async () => {
-    try {
-      if (userData) {
-        await updateUser(userIdToEdit, userData);
-        alert('Usuário atualizado com sucesso.');
-      }
-    } catch (error) {
-      console.error("Error updating user:", error);
-      alert('Erro ao atualizar o usuário. ' + error.message);
-    }
-  };
-
-  const handleDeleteUser = async () => {
-    const confirmDelete = window.confirm('Tem certeza que deseja deletar este usuário?');
-    if (confirmDelete) {
-      try {
-        await deleteUser(userIdToEdit);
-        alert('Usuário deletado com sucesso.');
-        setUserData(null);
-        setUserIdToEdit('');
-      } catch (error) {
-        console.error("Error deleting user:", error);
-        alert('Erro ao deletar o usuário. ' + error.message);
-      }
-    }
-  };
-
   return (
     <div className='joke-manager'>
-      {/* Seção para gerenciar piadas */}
       <div className='card'>
         <h2>{isUpdate ? "Editar Piada" : "Adicionar Nova Piada"}</h2>
         <input
@@ -220,35 +178,6 @@ export default function JokeManager() {
           <>
             <p>Conteúdo: {jokeData.joke || `${jokeData.setup} - ${jokeData.delivery}`}</p>
             <button onClick={handleDeleteJoke}>Deletar Piada</button>
-          </>
-        )}
-      </div>
-
-      <div className='card'>
-        <h2>Gerenciamento de Usuários</h2>
-        <input
-          type="text"
-          placeholder='ID do Usuário'
-          value={userIdToEdit}
-          onChange={(e) => setUserIdToEdit(e.target.value)}
-        />
-        <button onClick={fetchUser}>Buscar Usuário</button>
-        {userData && (
-          <>
-            <div>
-              <p>Nome: {userData.name}</p>
-              <input
-                type="text"
-                placeholder='Nome do Usuário'
-                value={userData.name || ''}
-                onChange={(e) =>
-                  setUserData({ ...userData, name: e.target.value })
-                }
-              />
-              <p>Email: {userData.email}</p>
-            </div>
-            <button onClick={handleUpdateUser}>Atualizar Usuário</button>
-            <button onClick={handleDeleteUser}>Deletar Usuário</button>
           </>
         )}
       </div>
