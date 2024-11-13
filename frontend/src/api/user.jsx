@@ -19,7 +19,7 @@ export const updateUser = async (id, user) => {
 }
 
 export const deleteUser = async (id) => {
-    return api.delete(`/api/user/${id}`) // Corrigido o erro de digitação
+    return api.delete(`/api/user/${id}`) 
 }
 
 export const getUserById = async () => {
@@ -28,7 +28,6 @@ export const getUserById = async () => {
 }
 
 export const getUserByIdSpecific = async (id) => {
-
     const response = await api.get(`/api/user/find/${id}`);
     return response.data;
 }
