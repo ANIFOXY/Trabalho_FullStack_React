@@ -84,3 +84,19 @@ body {
 .button-admin:hover {
     background-color: #e64a19; 
 }
+
+.button-logout {
+    background-color: #3b0261;
+    color: white; 
+    padding: 0.5rem 3rem; 
+    border-radius: 5px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    transition: background-color 0.3s; 
+    border: none; 
+    cursor: pointer;
+}
+
+.button-logout:hover {
+    background-color: #5a0792; 
+}
