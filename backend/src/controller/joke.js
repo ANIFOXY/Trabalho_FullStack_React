@@ -39,59 +39,59 @@ class JokesController {
     return jokesValue;
   }
  
-  async findAll(page = 1) {
+  async findAll() {
     try {
       const limit = 20;
-      const offset = (page - 1) * limit;
+      const offset = (1 - 1) * limit;
       const { count, rows: jokesValue } = await jokes.findAndCountAll({ limit, offset });
  
-      if (page === 1 && jokesValue.length === 0) {
-        let hasMore = true;
-        let pageNum = 1;
+      if (jokesValue.length === 0) {
+        let NumJoke = 1;
  
-        while (hasMore) {
+        while (NumJoke <= 100) {
+          console.log ("batata")
           try {
-            const response = await fetch(`https://v2.jokeapi.dev/joke/Any?page=${pageNum}`);
+            const response = await fetch(`https://v2.jokeapi.dev/joke/Any`);
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }
  
             const data = await response.json();
-            hasMore = data.hasOwnProperty('nextPage') && data.nextPage !== null;
- 
-            data.jokes.forEach(it => {
-              jokes.create({
-                category: it.category,
-                type: it.type,
-                joke: it.joke,
-                nsfw: it.nsfw || false,
-                religious: it.religious || false,
-                political: it.political || false,
-                racist: it.racist || false,
-                sexist: it.sexist || false,
-                explicit: it.explicit || false,
-                safe: it.safe || true,
-                lang: it.lang || 'en'
-              });
+            console.log (data)
+            
+            let jokeText = null;
+            if (data.type === 'twopart') {
+              jokeText = `${data.setup}\n${data.delivery}`;
+            } else if (data.joke) {
+              jokeText = data.joke;
+            }
+
+            if (!jokeText) {
+              console.log('Piada invalida ou ausente, tentando novamente...');
+              continue;
+            }
+
+            await jokes.create({
+              category: data.category,
+              type: data.type,
+              joke: data.joke,
+              nsfw: data.flags.nsfw || false,
+              religious: data.flags.religious || false,
+              political: data.flags.political || false,
+              racist: data.flags.racist || false,
+              sexist: data.flags.sexist || false,
+              explicit: data.flags.explicit || false,
+              safe: data.safe || true,
+              lang: data.lang || 'en'
             });
-            pageNum++;
+            NumJoke++;
           } catch (error) {
-            hasMore = false;
+            NumJoke=20
           }
         }
       }
- 
-      const pages = Math.ceil(count / limit);
- 
-      return {
-        info: {
-          count: count,
-          pages: pages,
-          next: page < pages ? `http://localhost:3000/api/v1/jokes?page=${page + 1}` : null,
-          prev: page > 1 ? `http://localhost:3000/api/v1/jokes?page=${page - 1}` : null
-        },
-        results: jokesValue
-      };
+  
+      return jokesValue;
     } catch (error) {
       console.log(error);
       throw new Error('Erro ao listar as piadas, tente novamente.');

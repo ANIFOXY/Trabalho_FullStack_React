@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom'; 
 import { AuthContext } from '../../auth/Context'; 
 import './styles.css';
+import { getJokes } from '../../api/joke';
 
 export default function JokePage() {
   const { role } = useContext(AuthContext); // para obter o role do usuario
@@ -50,7 +51,7 @@ export default function JokePage() {
   }
 
   useEffect(() => {
-    loadJoke(selectedType, selectedLanguage, selectedCategory);
+    loadJoke(selectedType, selectedLanguage, selectedCategory, getJokes);
   }, []);
 
   const handleTypeChange = (event) => {

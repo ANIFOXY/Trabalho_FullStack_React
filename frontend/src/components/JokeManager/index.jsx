@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
-import { createJoke, updateJoke, deleteJoke, getJokeById } from '../../api/joke';
+import { createJoke, updateJoke, deleteJoke, getJokeById, getJokes } from '../../api/joke';
 
 export default function JokeManager() {
   const navigate = useNavigate();
@@ -27,6 +27,8 @@ export default function JokeManager() {
 
   const [userIdToEdit, setUserIdToEdit] = useState('');
   const [userData, setUserData] = useState(null);
+
+  const [jokesList, setJokesList] = useState([]);
 
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
@@ -81,6 +83,20 @@ export default function JokeManager() {
       }
     }
   };
+
+  const fetchJokesList = async () => {
+    try {
+      const jokes = await getJokes();
+      setJokesList(jokes);
+    } catch (error) {
+      console.error("Error fetching jokes list", error);
+      alert('Erro ao listar as piadas. ' + error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchJokesList();
+  }, []);
 
   return (
     <div className='joke-manager'>
@@ -164,6 +180,34 @@ export default function JokeManager() {
         </button>
       </div>
 
+      <div className="joke-list">
+        <h2>Lista de Piadas</h2>
+        <div className="joke-list-items">
+          {jokesList.length === 0 ? (
+            <p>Nao ha piadas cadastradas.</p>
+          ) : (
+            jokesList.map((joke) => (
+            <div key={joke.id} className="joke-item">
+              <p>
+                <strong>ID:</strong> {joke.id}
+              </p>
+              <p>
+                <strong>Categoria:</strong> {joke.category}
+              </p>
+              <p>
+                <strong>Piada:</strong> {joke.joke || `${joke.setup} - ${joke.delivery}`}
+              </p>
+              <button onClick={() => {
+                setJokeIdToEdit(joke.id);
+                fetchJoke();
+              }}>Editar</button>
+              <button onClick={() => handleDeleteJoke(joke.id)}>Deletar</button>
+            </div>
+          ))
+        )}
+        </div>
+      </div>
+
       <div className='card'>
         <h2>Editar ou Deletar Piada</h2>
         <input
@@ -176,7 +220,6 @@ export default function JokeManager() {
         {isUpdate && (
           <>
             <p>Conteúdo: {jokeData.joke || `${jokeData.setup} - ${jokeData.delivery}`}</p>
-            <button onClick={handleDeleteJoke}>Deletar Piada</button>
           </>
         )}
       </div>
