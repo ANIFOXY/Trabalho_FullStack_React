@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
-import { createJoke, updateJoke, deleteJoke, getJokeById } from '../../api/joke'; 
+import { createJoke, updateJoke, deleteJoke, getJokeById } from '../../api/joke';
 
 export default function JokeManager() {
   const navigate = useNavigate();
   const [jokeData, setJokeData] = useState({
     id: '',
     category: '',
-    type: 'single',
-    joke: '',
+    type: 'single', 
+    joke: '', 
+    setup: '', 
+    delivery: '', 
     nsfw: false,
     religious: false,
     political: false,
@@ -19,9 +21,12 @@ export default function JokeManager() {
     safe: true,
     lang: 'en',
   });
-  
+
   const [jokeIdToEdit, setJokeIdToEdit] = useState('');
   const [isUpdate, setIsUpdate] = useState(false);
+
+  const [userIdToEdit, setUserIdToEdit] = useState('');
+  const [userData, setUserData] = useState(null);
 
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
@@ -40,10 +45,8 @@ export default function JokeManager() {
       }
       
       if (isUpdate) {
-        console.log("Updating joke with ID:", jokeData.id); 
         await updateJoke(jokeData.id, jokeData);
       } else {
-        console.log("Creating new joke"); 
         await createJoke(jokeData);
       }
       navigate('/apiJoke');
@@ -53,7 +56,7 @@ export default function JokeManager() {
     }
   };
 
-  const handleDelete = async () => {
+  const handleDeleteJoke = async () => {
     const confirmDelete = window.confirm('Tem certeza que deseja deletar esta piada?');
     if (confirmDelete) {
       try {
@@ -70,46 +73,23 @@ export default function JokeManager() {
     if (jokeIdToEdit) {
       try {
         const joke = await getJokeById(jokeIdToEdit);
-        console.log("Fetched joke:", joke); 
         setJokeData(joke);
         setIsUpdate(true);
       } catch (error) {
         console.error("Error fetching joke:", error);
-        alert('Erro ao buscar a piada. ' + error.message); 
+        alert('Não há este ID de piada cadastrado. ' + error.message); 
       }
     }
   };
 
-  useEffect(() => {
-    if (jokeIdToEdit) {
-      fetchJoke();
-    } else {
-      setIsUpdate(false);
-      setJokeData({
-        id: '',
-        category: '',
-        type: 'single',
-        joke: '',
-        nsfw: false,
-        religious: false,
-        political: false,
-        racist: false,
-        sexist: false,
-        explicit: false,
-        safe: true,
-        lang: 'en',
-      });
-    }
-  }, [jokeIdToEdit]);
-
   return (
     <div className='joke-manager'>
       <div className='card'>
-        <h2>Adicionar Nova Piada</h2>
+        <h2>{isUpdate ? "Editar Piada" : "Adicionar Nova Piada"}</h2>
         <input
           type="text"
           id='joke'
-          placeholder='Conteúdo da piada'
+          placeholder='Conteúdo da piada (se for do tipo single)'
           value={jokeData.joke}
           onChange={handleChange}
           required
@@ -118,30 +98,28 @@ export default function JokeManager() {
           <>
             <input
               type="text"
-              id='setup'
-              placeholder='Setup'
+              id="setup"
+              placeholder="Setup (para piadas two-part)"
               value={jokeData.setup}
               onChange={handleChange}
-              required
             />
             <input
               type="text"
-              id='delivery'
-              placeholder='Delivery'
+              id="delivery"
+              placeholder="Delivery (para piadas two-part)"
               value={jokeData.delivery}
               onChange={handleChange}
-              required
             />
           </>
         )}
         <select id='category' value={jokeData.category} onChange={handleChange} required>
           <option value="">Selecione uma categoria</option>
-          <option value="nsfw">NSFW</option>
-          <option value="religious">Religioso</option>
-          <option value="political">Político</option>
-          <option value="racist">Racista</option>
-          <option value="sexist">Sexista</option>
-          <option value="explicit">Explícito</option>
+          <option value="Programming">Programação</option>
+          <option value="Miscellaneous">Diversos</option>
+          <option value="Dark">Escuro</option>
+          <option value="Pun">Trocadilhos</option>
+          <option value="Spooky">Assustador</option>
+          <option value="Christmas">Natalino</option>
         </select>
         <select id='lang' value={jokeData.lang} onChange={handleChange}>
           <option value="en">Inglês</option>
@@ -151,7 +129,6 @@ export default function JokeManager() {
           <option value="fr">Francês</option>
           <option value="it">Italiano</option>
         </select>
-
         <div>
           <label>
             <input type="checkbox" id='nsfw' checked={jokeData.nsfw} onChange={handleChange} />
@@ -198,8 +175,8 @@ export default function JokeManager() {
         <button onClick={fetchJoke}>Buscar Piada</button>
         {isUpdate && (
           <>
-            <p>Conteúdo: {jokeData.joke}</p>
-            <button onClick={handleDelete}>Deletar Piada</button>
+            <p>Conteúdo: {jokeData.joke || `${jokeData.setup} - ${jokeData.delivery}`}</p>
+            <button onClick={handleDeleteJoke}>Deletar Piada</button>
           </>
         )}
       </div>
