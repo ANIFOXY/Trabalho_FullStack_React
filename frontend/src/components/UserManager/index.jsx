@@ -5,6 +5,7 @@ import {
   deleteUser,
   getUserByIdSpecific,
   getUsers,
+  createUserAdmin,
 } from "../../api/user";
 
 export default function UserManager() {
@@ -14,6 +15,9 @@ export default function UserManager() {
   const [updNome, setUpdNome] = useState("");
   const [updEmail, setUpdEmail] = useState("");
   const [users, setUsers] = useState([]);
+  const [newAdminNome, setNewAdminNome] = useState("");
+  const [newAdminEmail, setNewAdminEmail] = useState("");
+  const [newAdminSenha, setNewAdminSenha] = useState("");
 
   useEffect(() => {
     fetchAllUsers();
@@ -23,7 +27,6 @@ export default function UserManager() {
     if (userId) {
       try {
         const response = await getUserByIdSpecific(userId);
-        console.log(userId);
         setUserData(response);
         setUpdNome(response.nome);
         setUpdEmail(response.email);
@@ -68,9 +71,32 @@ export default function UserManager() {
     try {
       await deleteUser(userId);
       alert("Usuário deletado com sucesso.");
+      fetchAllUsers();
     } catch (error) {
       console.error("Erro ao deletar usuário:", error);
       alert("Houve um erro ao tentar deletar o usuário.");
+    }
+  };
+
+  const handleCreateAdmin = async () => {
+    if (!newAdminNome || !newAdminEmail || !newAdminSenha) {
+      alert("Por favor, preencha todos os campos para criar um usuário administrador.");
+      return;
+    }
+    try {
+      const response = await createUserAdmin({
+        nome: newAdminNome,
+        email: newAdminEmail,
+        senha: newAdminSenha,
+      });
+      alert(`Usuário administrador ${response.nome} criado com sucesso!`);
+      setNewAdminNome("");
+      setNewAdminEmail("");
+      setNewAdminSenha("");
+      fetchAllUsers(); // Atualiza a lista de usuários
+    } catch (error) {
+      console.error("Erro ao criar usuário administrador:", error);
+      alert("Houve um erro ao tentar criar o usuário administrador.");
     }
   };
 
@@ -114,6 +140,29 @@ export default function UserManager() {
             </div>
           </>
         )}
+      </div>
+
+      <div className="user-create-card">
+        <h2>Criar Novo Usuário Administrador</h2>
+        <input
+          type="text"
+          placeholder="Nome do Administrador"
+          value={newAdminNome}
+          onChange={(e) => setNewAdminNome(e.target.value)}
+        />
+        <input
+          type="email"
+          placeholder="Email do Administrador"
+          value={newAdminEmail}
+          onChange={(e) => setNewAdminEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Senha do Administrador"
+          value={newAdminSenha}
+          onChange={(e) => setNewAdminSenha(e.target.value)}
+        />
+        <button onClick={handleCreateAdmin}>Criar Usuário Admin</button>
       </div>
 
       <div className="user-list-card">

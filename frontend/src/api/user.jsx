@@ -54,4 +54,24 @@ export const findUser = async (id) => {
     return userValue;
 }
 
+export const blockUser = async (id) => {
+    try {
+        const response = await api.put(`/api/user/block/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao bloquear usuário com ID ${id}:`, error);
+        throw error;
+    }
+};
+
+export const unblockUser = async (id) => {
+    try {
+        const response = await api.put(`/api/user/unblock/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao desbloquear usuário com ID ${id}:`, error);
+        throw error;
+    }
+};
+
 

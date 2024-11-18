@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
 import { createJoke, updateJoke, deleteJoke, getJokeById } from '../../api/joke';
-import { updateUser, deleteUser, getUserById } from '../../api/user';
 
 export default function JokeManager() {
   const navigate = useNavigate();
