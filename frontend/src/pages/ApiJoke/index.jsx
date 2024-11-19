@@ -4,6 +4,7 @@ import { AuthContext } from '../../auth/Context';
 import './styles.css';
 import { getJokes } from '../../api/joke';
 
+
 export default function JokePage() {
   const { role } = useContext(AuthContext); // para obter o role do usuario
   const [currentJoke, setCurrentJoke] = useState(null);
@@ -14,18 +15,11 @@ export default function JokePage() {
   const [selectedCategory, setSelectedCategory] = useState('');
 
   async function fetchJokes(type, language, category) {
-    console.log(role, "batata")
     try {
-      let url = `https://v2.jokeapi.dev/joke/${type}?lang=${language}`;
-      if (category) {
-        url += `&blacklistFlags=${category}`;
-      }
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('Erro na requisição');
-      }
-      const data = await response.json();
-      return data;
+      const data = await getJokes(type, language, category)
+      console.log(Math.floor(Math.random() * data.length))
+
+      return data[Math.floor(Math.random() * data.length)];
     } catch (err) {
       setError(err.message);
       return null;
@@ -51,8 +45,8 @@ export default function JokePage() {
   }
 
   useEffect(() => {
-    loadJoke(selectedType, selectedLanguage, selectedCategory, getJokes);
-  }, []);
+    loadJoke(selectedType, selectedLanguage, selectedCategory);
+  }, [selectedType, selectedLanguage, selectedCategory]);
 
   const handleTypeChange = (event) => {
     setSelectedType(event.target.value);

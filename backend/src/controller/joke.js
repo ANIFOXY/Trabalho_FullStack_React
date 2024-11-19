@@ -39,13 +39,28 @@ class JokesController {
     return jokesValue;
   }
  
-  async findAll() {
+  async findAll(type, language, category) {
     try {
-      const limit = 20;
-      const offset = (1 - 1) * limit;
-      const { count, rows: jokesValue } = await jokes.findAndCountAll({ limit, offset });
- 
-      if (jokesValue.length === 0) {
+      let where = {};
+      if (type){
+        if (type == "Any"){
+          where.type = "single"
+        }else {
+          where.type= type
+        }
+      }
+       // Adicionando o filtro 'language' se fornecido
+    if (language) {
+      where.lang = language;
+    }
+
+    // Adicionando o filtro 'category' se fornecido
+    if (category) {
+      where.category = category;
+    }
+      const jokesValue = await jokes.findAll({where });
+console.log (jokesValue, where)
+      if (jokesValue.length === 0 && (!type && !language && !category)) {
         let NumJoke = 1;
  
         while (NumJoke <= 100) {
