@@ -46,9 +46,10 @@ class JokesApi {
     }
 
     async findAllJokes(req, res) {
-        const { page = 1 } = req.query
+        const {type, language, category} = req.query
+        console.log(req.query)
         try {
-            const jokes = await JokesController.findAll(Number(page))
+            const jokes = await JokesController.findAll(type, language, category)
             return res.status(200).send(jokes)
         } catch (e) {
             return res.status(400).send({ error: `Erro ao listar piadas: ${e.message}`})

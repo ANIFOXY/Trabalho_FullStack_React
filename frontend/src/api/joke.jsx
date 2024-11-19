@@ -1,10 +1,13 @@
 import api from './api'; 
 
+//Colocar mais parametros aqui para ele pegar do backend
+//Os parametros estao no JoeManager
 // obter todas as piadas
-export const getJokes = async (page = 1) => {
-  const response = await api.get('/api/joke', {
-    params: {
-      page: page,
+export const getJokes = async (type, language, category) => {
+  console.log(type, language, category)
+  const response = await api.get(`/api/joke/`, {
+    params:{
+      type, language, category
     }
   });
   return response.data;
