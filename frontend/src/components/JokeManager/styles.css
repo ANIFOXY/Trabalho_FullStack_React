@@ -23,3 +23,86 @@
     margin: 8px 0;
   }
   
+/* Contêiner da Listagem de Piadas */
+.jokes-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Card para cada Piada na Lista */
+.joke-item {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 900px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.joke-item:hover {
+  transform: scale(1.02);
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Título da Piada */
+.joke-item h3 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #333;
+  font-weight: 600;
+}
+
+.joke-item p {
+  margin: 8px 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Controles de Ação (deletar) */
+.joke-item-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.joke-item button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.joke-item button:hover {
+  background-color: #c9302c;
+}
+
+.joke-item button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Estilos para Responsividade */
+@media (max-width: 768px) {
+  .jokes-list-container {
+    width: 90%;
+  }
+
+  .joke-item {
+    width: 100%;
+  }
+}
