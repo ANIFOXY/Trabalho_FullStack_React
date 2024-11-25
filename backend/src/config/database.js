@@ -8,11 +8,11 @@ class Database {
     
     init(){
         this.db = new Sequelize({
-            database:"apiRenan",
-            host:"localhost",
-            password:"",
-            username:"root",
-            dialect:"mysql"
+            database: process.env.DB_DATABASE,
+            host: process.env.DB_HOST,
+            password: process.env.DB_PASSWORD,
+            username: process.env.DB_USER,
+            dialect: process.env.DB_DIALECT,
         })
     }
 }
