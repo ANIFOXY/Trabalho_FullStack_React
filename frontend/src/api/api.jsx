@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: "https://frontend-fullstack-8n55.onrender.com",
+    baseURL: "https://backend-fullstack-6v86.onrender.com",
     timeout: 10000
 })
 
