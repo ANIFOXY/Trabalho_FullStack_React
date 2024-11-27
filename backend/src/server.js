@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const database = require("../src/config/database");
 const UserModel = require("../src/model/user"); 
+const UserController = require("../src/controller/user");
 
 const UserRouter = require("../src/routes/user");
 const JokeRouter = require("../src/routes/joke");
@@ -25,31 +26,26 @@ app.use("/api/user", authMiddleware(), UserRouter);
 app.use("/api/joke", JokeRouter);
 
 const createAdminUser = async () => {
-  try {
-    const adminEmail = process.env.ADMIN_EMAIL;
-    const adminPassword = process.env.ADMIN_PASSWORD;
-    const adminName = process.env.ADMIN_NAME;
-
-    if (!adminEmail || !adminPassword || !adminName) {
-      console.error("As variáveis ADMIN_EMAIL, ADMIN_PASSWORD e ADMIN_NAME são obrigatórias no .env.");
-      return;
+    try {
+      const adminEmail = process.env.ADMIN_EMAIL;
+      const adminPassword = process.env.ADMIN_PASSWORD;
+      const adminName = process.env.ADMIN_NAME;
+  
+      if (!adminEmail || !adminPassword || !adminName) {
+        console.error("As variáveis ADMIN_EMAIL, ADMIN_PASSWORD e ADMIN_NAME são obrigatórias no .env.");
+        return;
+      }
+  
+      await UserController.createUser(adminName, adminEmail, adminPassword, "admin");
+      console.log(`Usuário admin criado com sucesso: ${adminEmail}`);
+    } catch (error) {
+      if (error.name === "SequelizeUniqueConstraintError") {
+        console.log("Usuário admin já existe ou houve um conflito de chave única.");
+      } else {
+        console.error("Erro ao criar o usuário admin: ", error);
+      }
     }
-
-    await UserModel.create({
-      nome: adminName,
-      email: adminEmail,
-      senha: adminPassword, 
-      permissao: "admin",
-    });
-    console.log(`Usuário admin criado com sucesso: ${adminEmail}`);
-  } catch (error) {
-    if (error.name === "SequelizeUniqueConstraintError") {
-      console.log("Usuário admin já existe ou houve um conflito de chave única.");
-    } else {
-      console.error("Erro ao criar o usuário admin: ", error);
-    }
-  }
-};
+  };
 
 database.db
   .sync({ force: false })
