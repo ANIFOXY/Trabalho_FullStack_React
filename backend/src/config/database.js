@@ -1,4 +1,5 @@
 const { Sequelize } = require("sequelize");
+require('dotenv').config();
 
 class Database {
 
@@ -6,14 +7,21 @@ class Database {
         this.init();
     }
     
-    init(){
+    init() {
         this.db = new Sequelize({
-            database:"apiRenan",
-            host:"localhost",
-            password:"",
-            username:"root",
-            dialect:"mysql"
-        })
+            database: process.env.DB_DATABASE,
+            host: process.env.DB_HOST,
+            password: process.env.DB_PASSWORD,
+            username: process.env.DB_USERNAME,
+            dialect: process.env.DB_DIALECT,
+            port: process.env.DB_PORT,
+            dialectOptions: {
+                ssl: {
+                    require: true,
+                    rejectUnauthorized: false
+                }
+            } 
+        });
     }
 }
 
