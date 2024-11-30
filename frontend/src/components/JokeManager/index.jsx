@@ -51,7 +51,6 @@ export default function JokeManager() {
       } else {
         await createJoke(jokeData);
       }
-      navigate('/apiJoke');
     } catch (error) {
       console.error("Error saving joke:", error); 
       alert('Erro ao salvar a piada. Tente novamente. ' + error.message); 

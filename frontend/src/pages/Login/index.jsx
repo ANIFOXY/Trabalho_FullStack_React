@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import "./styles.css";
 import { loginUser } from '../../api/user';
 import { useNavigate } from 'react-router-dom';
@@ -65,10 +66,10 @@ export default function Login() {
                     />
                 </div>
                 <button type="submit" className="login-submit-button">Entrar</button>
-            </form>
-            <p className="login-register-prompt">
-                Ainda não tem login? <a href="/cadastro" className="login-register-link">Cadastre-se</a>
-            </p>
+                </form>
+<p className="login-register-prompt">
+    Ainda não tem login? <Link to="/cadastro" className="login-register-link">Cadastre-se</Link>
+</p>
         </div>
     );
 };

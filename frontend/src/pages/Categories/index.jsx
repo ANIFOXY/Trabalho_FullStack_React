@@ -10,6 +10,7 @@ export default function CategoryJokePage() {
     async function fetchJokeByCategory(category) {
         setLoading(true);
         try {
+            await new Promise(resolve => setTimeout(resolve, 1000)); 
             const response = await fetch(`https://v2.jokeapi.dev/joke/${category}`);
             if (!response.ok) {
                 throw new Error('Erro na requisição');
